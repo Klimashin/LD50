@@ -6,7 +6,8 @@ public class CharController : MonoBehaviour
     public float Speed;
     public Transform RendererTransform;
 
-    private InputBuffer _inputBuffer = new InputBuffer();
+    [SerializeField] private CampSystem _campSystem;
+    
 
     public void Enable()
     {
@@ -15,38 +16,23 @@ public class CharController : MonoBehaviour
 
     private void OnAction(InputAction.CallbackContext obj)
     {
-        _inputBuffer.Action = true;
+        // implement me
     }
 
     private void Update()
     {
         var input = Game.InputActions.Gameplay.Move.ReadValue<Vector2>();
-        if (input.y != 0)
-        {
-            _inputBuffer.Up = input.y > 0;
-            _inputBuffer.Down = input.y < 0;
-        }
-
-        if (input.x != 0)
-        {
-            _inputBuffer.Left = input.x < 0;
-            _inputBuffer.Right = input.x > 0;
-        }
-    }
-
-    private void FixedUpdate()
-    {
         var direction = Vector2.zero;
-        if (_inputBuffer.Up)
+        if (input.y > 0)
             direction += Vector2.up;
         
-        if (_inputBuffer.Down)
+        if (input.y < 0)
             direction += Vector2.down;
         
-        if (_inputBuffer.Left)
+        if (input.x < 0)
             direction += Vector2.left;
         
-        if (_inputBuffer.Right)
+        if (input.x > 0)
             direction += Vector2.right;
 
         if (direction != Vector2.zero)
@@ -54,21 +40,16 @@ public class CharController : MonoBehaviour
             transform.Translate(direction * (Speed * Time.deltaTime));
             RendererTransform.rotation = Quaternion.LookRotation(Vector3.forward, direction);
         }
-        
-        _inputBuffer.Flush();
     }
 
-    private class InputBuffer
+    private void OnTriggerEnter2D(Collider2D other)
     {
-        public bool Up;
-        public bool Down;
-        public bool Left;
-        public bool Right;
-        public bool Action;
-
-        public void Flush()
+        if (other.TryGetComponent<Food>(out var food))
         {
-            Up = Down = Left = Right = Action = false;
+            _campSystem.CurrentFood += food.Amount;
+            Destroy(other.gameObject);
+            // play sound
+            // play particle vfx
         }
     }
 }

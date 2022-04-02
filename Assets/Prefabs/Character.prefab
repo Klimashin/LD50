@@ -237,8 +237,9 @@ MonoBehaviour:
   Speed: 2
   RendererTransform: {fileID: 8669004762170278512}
   FootstepParticles: {fileID: 8212840831923273873}
+  CharacterAnimator: {fileID: 1178073315605471457}
   FootstepDistance: 0.5
-  FootstepGap: 0.25
+  FootstepGap: 0.2
   _campSystem: {fileID: 11400000, guid: d0ef8547f0e24094eba587ce160e9c80, type: 2}
 --- !u!50 &7016734430427449283
 Rigidbody2D:

@@ -69,7 +69,7 @@ public class SceneManager : ISceneManager
 
         yield return Coroutines.StartRoutine(InitializeSceneRoutine(config, sceneLoadedCallback));
 
-        yield return new WaitForSecondsRealtime(1f);
+        yield return new WaitForSecondsRealtime(0.1f);
         isLoading = false;
         OnSceneLoadCompletedEvent?.Invoke(config);
         sceneLoadedCallback?.Invoke(config);

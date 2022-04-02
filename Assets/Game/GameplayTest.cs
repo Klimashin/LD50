@@ -3,25 +3,17 @@ using UnityEngine;
 
 public class GameplayTest : MonoBehaviour
 {
-    private void OnEnable()
-    {
-        Game.SceneManager.OnSceneLoadCompletedEvent += SceneManagerOnOnSceneLoadCompletedEvent;
-    }
-
-    private void OnDisable()
-    {
-        Game.SceneManager.OnSceneLoadCompletedEvent -= SceneManagerOnOnSceneLoadCompletedEvent;
-    }
-
-    private void SceneManagerOnOnSceneLoadCompletedEvent(SceneConfig config)
+    public CharController charController;
+    
+    private void Start()
     {
         StartCoroutine(GameplayInitializer());
     }
 
     private IEnumerator GameplayInitializer()
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.1f);
         
-        Debug.Log("HERE");
+        charController.Enable();
     }
 }

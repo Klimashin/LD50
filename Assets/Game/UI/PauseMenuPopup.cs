@@ -5,10 +5,19 @@ public class PauseMenuPopup : UIPopup
 {
     [SerializeField, SceneName] private string _mainMenuSceneName;
     [SerializeField] private Button _mainMenuButton;
+    [SerializeField] private Button _campTestButton;
 
     private void OnEnable()
     {
         _mainMenuButton.onClick.AddListener(MainMenuButtonClick);
+        _campTestButton.onClick.AddListener(OpenCampScreen);
+    }
+
+    private void OpenCampScreen()
+    {
+        Hide();
+        uiController.GetUIElement<GameplayUIScreen>().Hide();
+        uiController.ShowUIElement<CampScreen>();
     }
 
     private void OnDisable()

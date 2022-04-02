@@ -9,13 +9,7 @@ public class GameplayUIScreen : UIScreen
     [SerializeField] private CampSystem _campSystem;
     [SerializeField] private TextMeshProUGUI _foodText;
 
-    private UIPopup _pauseMenu;
-
-    public override void OnCreate()
-    {
-        base.OnCreate();
-        _pauseMenu = uiController.GetUIElement<PauseMenuPopup>();
-    }
+    //private UIPopup _pauseMenu;
 
     private void OnEnable()
     {
@@ -38,18 +32,18 @@ public class GameplayUIScreen : UIScreen
 
     private void OnPauseAction(InputAction.CallbackContext obj)
     {
-        if (_pauseMenu.isActive)
+        if (uiController.GetUIElement<PauseMenuPopup>().isActive)
         {
-            _pauseMenu.Hide();
+            uiController.GetUIElement<PauseMenuPopup>().Hide();
         }
         else
         {
-            _pauseMenu.Show();
+            uiController.GetUIElement<PauseMenuPopup>().Show();
         }
     }
 
     private void OnPauseButtonClick()
     {
-        _pauseMenu.Show();
+        uiController.GetUIElement<PauseMenuPopup>().Show();
     }
 }

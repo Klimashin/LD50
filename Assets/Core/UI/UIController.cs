@@ -72,8 +72,9 @@ public class UIController : MonoBehaviour
 	{
 		var type = typeof(T);
 
-		if (_createdUIElementsMap.TryGetValue(type, out var foundElement) && foundElement.isActive)
+		if (_createdUIElementsMap.TryGetValue(type, out var foundElement))
 		{
+			foundElement.Show();
 			return (T) foundElement;
 		}
 

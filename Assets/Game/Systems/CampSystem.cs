@@ -1,4 +1,5 @@
 using System;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "CampSystem", menuName = "Systems/CampSystem")]
@@ -6,8 +7,14 @@ public class CampSystem : ScriptableObject
 {
     public CharacterNameToCharacterDataDict Characters;
     
-    public int CurrentFood { get; set; }
-    public int CurrentDay { get; set; }
+    [ShowInInspector] public int CurrentFood { get; set; }
+    [ShowInInspector] public int CurrentDay { get; set; }
+
+    private void Awake()
+    {
+        CurrentFood = 0;
+        CurrentDay = 0;
+    }
 }
 
 [Serializable]

@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -5,6 +6,8 @@ public class CharController : MonoBehaviour
 {
     public float Speed;
     public Transform RendererTransform;
+
+    [SerializeField] private CampSystem _campSystem;
 
     private InputBuffer _inputBuffer = new InputBuffer();
 
@@ -56,6 +59,16 @@ public class CharController : MonoBehaviour
         }
         
         _inputBuffer.Flush();
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.TryGetComponent<Food>(out var food))
+        {
+            _campSystem.CurrentFood += food.Amount;
+            // play sound
+            // play particle vfx
+        }
     }
 
     private class InputBuffer

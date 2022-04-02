@@ -121,7 +121,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Speed: 2
   RendererTransform: {fileID: 7016734430824251940}
-  _campSystem: {fileID: 0}
+  _campSystem: {fileID: 11400000, guid: d0ef8547f0e24094eba587ce160e9c80, type: 2}
 --- !u!50 &7016734430427449283
 Rigidbody2D:
   serializedVersion: 4

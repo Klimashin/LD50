@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 8677701895649538516}
   - component: {fileID: 1963628895916043564}
   - component: {fileID: 2928892242463483179}
+  - component: {fileID: 6644230761444180313}
+  - component: {fileID: 4249204220645285539}
   m_Layer: 0
   m_Name: CampEntrance
   m_TagString: Untagged
@@ -95,3 +97,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9707c1a003456d48827b27fa900da3e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &6644230761444180313
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7464186141793838315}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8405e3239da692748a53b3842799d767, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CellSize: 1000
+  GridSize: 1000
+--- !u!156049354 &4249204220645285539
+Grid:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7464186141793838315}
+  m_Enabled: 1
+  m_CellSize: {x: 1, y: 1, z: 1}
+  m_CellGap: {x: 0, y: 0, z: 0}
+  m_CellLayout: 0
+  m_CellSwizzle: 0

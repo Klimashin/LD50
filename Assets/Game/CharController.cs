@@ -5,9 +5,14 @@ public class CharController : MonoBehaviour
 {
     public float Speed;
     public Transform RendererTransform;
+    public ParticleSystem FootstepParticles;
+    public float FootstepDistance = 1f;
+    public float FootstepGap = 0.25f;
 
     [SerializeField] private CampSystem _campSystem;
-    
+
+    private float _distanceTraveled;
+
 
     public void Enable()
     {
@@ -18,7 +23,8 @@ public class CharController : MonoBehaviour
     {
         // implement me
     }
-
+    
+    private int dir = 1;
     private void Update()
     {
         var input = Game.InputActions.Gameplay.Move.ReadValue<Vector2>();
@@ -37,8 +43,27 @@ public class CharController : MonoBehaviour
 
         if (direction != Vector2.zero)
         {
-            transform.Translate(direction * (Speed * Time.deltaTime));
+            var distance = direction * (Speed * Time.deltaTime);
+            _distanceTraveled += distance.magnitude;
+            transform.Translate(distance);
             RendererTransform.rotation = Quaternion.LookRotation(Vector3.forward, direction);
+
+            Footstep();
+        }
+    }
+
+    private void Footstep()
+    {
+        if (_distanceTraveled >= FootstepDistance)
+        {
+            _distanceTraveled = 0;
+            var pos = transform.position + (RendererTransform.right * (FootstepGap * dir));
+            dir *= -1;
+            var ep = new ParticleSystem.EmitParams
+            {
+                position = pos, rotation = -RendererTransform.rotation.eulerAngles.z
+            };
+            FootstepParticles.Emit(ep, 1);
         }
     }
 

@@ -16,7 +16,7 @@ public class PauseMenuPopup : UIPopup
     private void OpenCampScreen()
     {
         Hide();
-        uiController.GetUIElement<GameplayUIScreen>().Hide();
+        uiController.HideUIElement<GameplayUIScreen>();
         uiController.ShowUIElement<CampScreen>();
     }
 

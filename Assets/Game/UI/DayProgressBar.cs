@@ -5,7 +5,7 @@ public class DayProgressBar : UIWidget
 {
     public Image ProgressBar;
 
-    public void UpdateProgressBar(float normalizedValue)
+    public void SetProgress(float normalizedValue)
     {
         ProgressBar.fillAmount = normalizedValue;
     }

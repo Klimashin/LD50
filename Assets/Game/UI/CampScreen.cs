@@ -28,9 +28,7 @@ public class CampScreen : UIScreen
     {
         setCharactersUnfed();
         updateCurrentDayText();
-        _dadSpeechArea.SetActive(false);
-        _momSpeechArea.SetActive(false);
-        _kidSpeechArea.SetActive(false);
+        hideAllSpeechAreas();
         _endDayButton.onClick.AddListener(OnEndDayButtonClick);
         _dadFeedButton.onClick.AddListener(delegate { OnFeedButtonClick(_dadFeedButton, "Dad"); });
         _momFeedButton.onClick.AddListener(delegate { OnFeedButtonClick(_momFeedButton, "Mom"); });
@@ -46,7 +44,7 @@ public class CampScreen : UIScreen
         _momFeedButton.onClick.RemoveListener(delegate { OnFeedButtonClick(_momFeedButton, "Mom"); });
         _kidFeedButton.onClick.RemoveListener(delegate { OnFeedButtonClick(_kidFeedButton, "Kid"); });
         OnAllCharactersDead -= endDay;
-        OnDayEnded += endGame;
+        OnDayEnded -= endGame;
     }
 
     private void Update()
@@ -66,10 +64,6 @@ public class CampScreen : UIScreen
             {
                 OnAllCharactersDead();
             }
-
-            dayCounterInc();
-            Hide();
-            uiController.ShowUIElement<GameplayUIScreen>();
         }
     }
 
@@ -151,12 +145,15 @@ public class CampScreen : UIScreen
 
     private void endDay()
     {
-        Debug.Log("endDay");
+        dayCounterInc();
+        Hide();
+        uiController.ShowUIElement<GameplayUIScreen>();
     }
 
     private void endGame()
     {
-        Debug.Log("endGame");
+        Hide();
+        uiController.ShowUIElement<EndGameScreen>();
     }
 
     private IEnumerator showCharacterSpeech(string characterKey)

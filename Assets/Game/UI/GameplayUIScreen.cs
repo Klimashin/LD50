@@ -1,3 +1,4 @@
+using System.Collections;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
@@ -11,6 +12,14 @@ public class GameplayUIScreen : UIScreen
     [SerializeField] private TextMeshProUGUI _foodText;
     [SerializeField] private DayProgressBar _progressBar;
     [SerializeField] private GameObject _foodFlyingIconPrefab;
+    [SerializeField] private float _gameplayTime;
+
+    private CharController _charController;
+
+    public override void OnCreate()
+    {
+        _charController = GameObject.FindGameObjectWithTag("Player").GetComponent<CharController>();
+    }
 
     public void AddFoodAnimated(int amount)
     {
@@ -25,15 +34,24 @@ public class GameplayUIScreen : UIScreen
             });
     }
 
-    private void OnEnable()
+    private void SetDayProgress(float progress)
     {
+        _progressBar.SetProgress(progress);
+    }
+
+    protected override void OnPostShow()
+    {
+        base.OnPostShow();
         _pauseButton.onClick.AddListener(OnPauseButtonClick);
         Game.InputActions.Gameplay.Pause.performed += OnPauseAction;
         Game.InputActions.Gameplay.Enable();
+
+        StartCoroutine(GameplayCoroutine());
     }
 
-    private void OnDisable()
+    protected override void OnPreHide()
     {
+        base.OnPreHide();
         _pauseButton.onClick.RemoveListener(OnPauseButtonClick);
         Game.InputActions.Gameplay.Pause.performed -= OnPauseAction;
         Game.InputActions.Gameplay.Disable();
@@ -46,18 +64,38 @@ public class GameplayUIScreen : UIScreen
 
     private void OnPauseAction(InputAction.CallbackContext obj)
     {
-        if (uiController.GetUIElement<PauseMenuPopup>().isActive)
+        var pauseMenu = uiController.GetUIElement<PauseMenuPopup>();
+        if (pauseMenu.isActive)
         {
-            uiController.GetUIElement<PauseMenuPopup>().Hide();
+            pauseMenu.Hide();
         }
         else
         {
-            uiController.GetUIElement<PauseMenuPopup>().Show();
+            pauseMenu.Show();
         }
     }
 
     private void OnPauseButtonClick()
     {
         uiController.GetUIElement<PauseMenuPopup>().Show();
+    }
+    
+    private IEnumerator GameplayCoroutine()
+    {
+        _charController.Enable();
+        
+        var currentTime = 0f;
+        while (currentTime <= _gameplayTime)
+        {
+            currentTime += Time.deltaTime;
+            var progress = currentTime / _gameplayTime;
+            SetDayProgress(progress);
+            yield return null;
+        }
+        
+        _charController.Disable();
+
+        Hide();
+        uiController.GetUIElement<CampScreen>().Show();
     }
 }

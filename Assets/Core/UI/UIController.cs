@@ -89,6 +89,22 @@ public class UIController : MonoBehaviour
 		return CreateAndShowElement<T>(prefab);
 	}
 
+	public void HideUIElement<T>() where T : UIElement, IUIElementOnLayer
+	{
+		var type = typeof(T);
+		if (_createdUIElementsMap.TryGetValue(type, out var foundElement))
+		{
+			foundElement.Hide();
+			return;
+		}
+
+		_cachedPopupsMap.TryGetValue(type, out var cachedPopup);
+		if (cachedPopup != null) 
+		{
+			cachedPopup.Hide();
+		}
+	}
+
 	private T CreateAndShowElement<T>(IUIElementOnLayer prefab) where T : UIElement, IUIElementOnLayer 
 	{
 		var container = GetContainer(prefab.layer);
@@ -128,9 +144,17 @@ public class UIController : MonoBehaviour
 		var prefabs = _sceneConfig.GetUIPrefabs();
 		foreach (var uiElementPref in prefabs) 
 		{
-			if (uiElementPref is UIScreen uiScreenPref && uiScreenPref.showByDefault)
+			if (uiElementPref is UIScreen uiScreenPref)
 			{
-				CreateAndShowScreen(uiScreenPref);
+				if (uiScreenPref.showByDefault)
+				{
+					CreateAndShowScreen(uiScreenPref);
+				}
+				else
+				{
+					CreateHiddenScreen(uiScreenPref);
+				}
+				
 				continue;
 			}
 
@@ -177,6 +201,16 @@ public class UIController : MonoBehaviour
 		var type = createdUIScreen.GetType();
 		_createdUIElementsMap[type] = createdUIScreen;
 		createdUIScreen.Show();
+	}
+	
+	private void CreateHiddenScreen(UIScreen uiScreenPref) 
+	{
+		var container = GetContainer(uiScreenPref.layer);
+		var createdUIScreen = Instantiate(uiScreenPref, container);
+		createdUIScreen.name = uiScreenPref.name;
+		var type = createdUIScreen.GetType();
+		_createdUIElementsMap[type] = createdUIScreen;
+		createdUIScreen.HideInstantly();
 	}
 
 	private Transform GetContainer(UILayerType layer) 

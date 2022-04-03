@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -17,10 +18,24 @@ public class CharController : MonoBehaviour
     [SerializeField] private CampSystem _campSystem;
 
     private float _distanceTraveled;
+    private Vector3 _initialPos;
+
+    private void Awake()
+    {
+        _initialPos = transform.position;
+    }
 
     public void Enable()
     {
+        transform.position = _initialPos;
         Game.InputActions.Gameplay.Action.performed += OnAction;
+        enabled = true;
+    }
+    
+    public void Disable()
+    {
+        Game.InputActions.Gameplay.Action.performed -= OnAction;
+        enabled = false;
     }
 
     private void OnAction(InputAction.CallbackContext obj)

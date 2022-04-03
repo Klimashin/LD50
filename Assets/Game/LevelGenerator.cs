@@ -1,33 +1,35 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class LevelGenerator : MonoBehaviour
 {
-    public List<GenerationCircle> _circles;
-    
+    public float GenerationSize = 40f;
+    public int GenerationCount = 200;
+    public List<GameObject> GenerationPrefabs;
+
     public IEnumerator Generate()
     {
         yield return null;
         
-        foreach (var generationCircle in _circles)
+        var haltonSeq = new HaltonSequence();
+        haltonSeq.Reset();
+
+        var pos = Vector3.zero;
+        var posOffset = new Vector3(GenerationSize / 2f, GenerationSize / 2f, 0f);
+
+        for(var i=0; i < GenerationCount; i++)
         {
-            yield return null;
+            haltonSeq.Increment();
+            
+            pos = haltonSeq.m_CurrentPos;
+            pos.z = 0.0f;
+            pos *= GenerationSize;
+
+            var prefab = GenerationPrefabs[Random.Range(0, GenerationPrefabs.Count)];
+            var levelObject = Instantiate(prefab);
+            levelObject.transform.position = pos - posOffset;
+            levelObject.transform.rotation = Quaternion.Euler(new Vector3(0f, 0f, Random.Range(0f, 360f)));
         }
     }
-
-    private void CircleGeneration(GenerationCircle data)
-    {
-        UnityEngine.Rendering.HaltonSequence.Get(0, 0);
-    }
-}
-
-[Serializable]
-public class GenerationCircle
-{
-    public float MinR;
-    public float MaxR;
-    public List<GameObject> Prefabs;
-    public float Step;
 }

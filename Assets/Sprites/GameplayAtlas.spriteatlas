@@ -1,0 +1,109 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: GameplayAtlas
+  m_EditorData:
+    serializedVersion: 2
+    textureSettings:
+      serializedVersion: 2
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 0
+      filterMode: 1
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+      sRGB: 1
+    platformSettings:
+    - serializedVersion: 3
+      m_BuildTarget: DefaultTexturePlatform
+      m_MaxTextureSize: 2048
+      m_ResizeAlgorithm: 0
+      m_TextureFormat: -1
+      m_TextureCompression: 2
+      m_CompressionQuality: 50
+      m_CrunchedCompression: 0
+      m_AllowsAlphaSplitting: 0
+      m_Overridden: 0
+      m_AndroidETC2FallbackOverride: 0
+      m_ForceMaximumCompressionQuality_BC6H_BC7: 0
+    packingSettings:
+      serializedVersion: 2
+      padding: 4
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 1
+      enableTightPacking: 1
+    secondaryTextureSettings: {}
+    variantMultiplier: 1
+    packables:
+    - {fileID: 2800000, guid: f09a740eaea206a4bb1cd62421a00743, type: 3}
+    - {fileID: 2800000, guid: a0f32499ad4753142a890cbc98f54718, type: 3}
+    - {fileID: 2800000, guid: e2ef59b11813e2f4fac819e9a81ca28c, type: 3}
+    - {fileID: 2800000, guid: 70277d18656f53b4cb9d3114adcfc2b4, type: 3}
+    - {fileID: 2800000, guid: 73a0b9b1d57a89045a068903a15765ab, type: 3}
+    - {fileID: 2800000, guid: cefdfd94e176a7443af4395d02ef0913, type: 3}
+    - {fileID: 2800000, guid: 1e27cc7ecf251e54e9f3f537d416a9e8, type: 3}
+    - {fileID: 2800000, guid: 41b971d68cfb5154ba01a668ad37385e, type: 3}
+    - {fileID: 21300000, guid: 41b971d68cfb5154ba01a668ad37385e, type: 3}
+    - {fileID: 2800000, guid: 9c52e83d2d6ac874e99b44cd5005bbd5, type: 3}
+    - {fileID: 2800000, guid: f230bac25dabb2f4f9cda001e13029ae, type: 3}
+    - {fileID: 2800000, guid: 5a6592e798038ca47a74df54e524aaaf, type: 3}
+    - {fileID: 2800000, guid: 59110f4eefa38a143a66a885a472ca1c, type: 3}
+    - {fileID: 2800000, guid: b55b917eeada6bb4889a63ca72df5f83, type: 3}
+    - {fileID: 2800000, guid: 615e1430f6ec1cf46b8c18b39bac2b85, type: 3}
+    - {fileID: 2800000, guid: 0531c764d22b20f43ac435dd40669778, type: 3}
+    - {fileID: 2800000, guid: 47a449302107fb7408d943550317ec83, type: 3}
+    - {fileID: 2800000, guid: 414e1e429aabf0a4f91b7b44cf6dd1ff, type: 3}
+    - {fileID: 2800000, guid: b856f0c12b985194c96085638ecfc45c, type: 3}
+    bindAsDefault: 1
+    isAtlasV2: 0
+    cachedData: {fileID: 0}
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 21300000, guid: 615e1430f6ec1cf46b8c18b39bac2b85, type: 3}
+  - {fileID: 21300000, guid: 47a449302107fb7408d943550317ec83, type: 3}
+  - {fileID: 21300000, guid: e2ef59b11813e2f4fac819e9a81ca28c, type: 3}
+  - {fileID: 21300000, guid: 73a0b9b1d57a89045a068903a15765ab, type: 3}
+  - {fileID: 21300000, guid: b856f0c12b985194c96085638ecfc45c, type: 3}
+  - {fileID: 21300000, guid: 414e1e429aabf0a4f91b7b44cf6dd1ff, type: 3}
+  - {fileID: 21300000, guid: f230bac25dabb2f4f9cda001e13029ae, type: 3}
+  - {fileID: 21300000, guid: 0531c764d22b20f43ac435dd40669778, type: 3}
+  - {fileID: 21300000, guid: cefdfd94e176a7443af4395d02ef0913, type: 3}
+  - {fileID: 21300000, guid: 41b971d68cfb5154ba01a668ad37385e, type: 3}
+  - {fileID: 21300000, guid: 5a6592e798038ca47a74df54e524aaaf, type: 3}
+  - {fileID: 21300000, guid: 70277d18656f53b4cb9d3114adcfc2b4, type: 3}
+  - {fileID: 21300000, guid: a0f32499ad4753142a890cbc98f54718, type: 3}
+  - {fileID: 21300000, guid: 9c52e83d2d6ac874e99b44cd5005bbd5, type: 3}
+  - {fileID: 21300000, guid: f09a740eaea206a4bb1cd62421a00743, type: 3}
+  - {fileID: 21300000, guid: 59110f4eefa38a143a66a885a472ca1c, type: 3}
+  - {fileID: 21300000, guid: b55b917eeada6bb4889a63ca72df5f83, type: 3}
+  - {fileID: 21300000, guid: 1e27cc7ecf251e54e9f3f537d416a9e8, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - walk5
+  - walk7
+  - hatch
+  - tree2
+  - walk9
+  - walk8
+  - walk1
+  - walk6
+  - wall-center
+  - wall-end
+  - walk2
+  - tree1
+  - bush1
+  - head
+  - box
+  - walk3
+  - walk4
+  - wall-corner
+  m_RenderDataMap: {}
+  m_Tag: GameplayAtlas
+  m_IsVariant: 0

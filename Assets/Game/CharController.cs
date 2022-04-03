@@ -17,7 +17,7 @@ public class CharController : MonoBehaviour
     [SerializeField] private CampSystem _campSystem;
 
     private float _distanceTraveled;
-
+    private UIPopup _foodPopup;
 
     public void Enable()
     {
@@ -26,7 +26,10 @@ public class CharController : MonoBehaviour
 
     private void OnAction(InputAction.CallbackContext obj)
     {
-        // implement me
+        if (_highlightedInteraction != null)
+        {
+            _highlightedInteraction.Execute(this);
+        }
     }
     
     private static readonly int IsMoving = Animator.StringToHash("IsMoving");
@@ -124,15 +127,17 @@ public class CharController : MonoBehaviour
             FootstepParticles.Emit(ep, 1);
         }
     }
-
-    /*private void OnTriggerEnter2D(Collider2D other)
+    
+    public void AddFood(int amount)
     {
-        if (other.TryGetComponent<Food>(out var food))
+        _campSystem.CurrentFood += amount;
+    }
+    
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.TryGetComponent<ICharacterInteraction>(out var interaction))
         {
-            _campSystem.CurrentFood += food.Amount;
-            Destroy(other.gameObject);
-            // play sound
-            // play particle vfx
+            interaction.Execute(this);
         }
-    }*/
+    }
 }

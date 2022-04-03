@@ -19,14 +19,14 @@ MonoBehaviour:
     - Kid
     _valueData:
     - Name: Dad
-      IsAlive: 1
+      IsAlive: 0
       IsFed: 0
       FoodRequired: 1
     - Name: Mom
-      IsAlive: 1
+      IsAlive: 0
       IsFed: 0
       FoodRequired: 1
     - Name: Kid
       IsAlive: 0
-      IsFed: 1
+      IsFed: 0
       FoodRequired: 1

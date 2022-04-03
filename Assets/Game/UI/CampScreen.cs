@@ -1,5 +1,7 @@
-using System;
+
 using System.Collections;
+using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -20,7 +22,9 @@ public class CampScreen : UIScreen
     [SerializeField] private TextMeshProUGUI _momSpeech;
     [SerializeField] private TextMeshProUGUI _kidSpeech;
     [SerializeField] private int _timeoutTimeSec = 2;
-    
+    [SerializeField] private Image _kidImage;
+    [SerializeField] private Image _momImage;
+    [SerializeField] private Image _dadImage;
 
     private void OnEnable()
     {
@@ -52,16 +56,61 @@ public class CampScreen : UIScreen
         {
             return;
         }
+        
+        StartCoroutine(EndDayCoroutine());
+    }
 
-        KillStarvingCharacters();
+    private IEnumerator EndDayCoroutine()
+    {
+        yield return null;
+        
+        var charactersDiedToday = KillStarvingCharacters();
+        if (charactersDiedToday.Count > 0)
+        {
+            foreach (var characterName in charactersDiedToday)
+            {
+                yield return StartCoroutine(CharacterDeathAnimation(characterName));
+            }
+        }
         
         if (hasAliveCharacters())
         {
-            OnDayEnded();
+            _campSystem.CurrentDay++;
+            Hide();
+            uiController.ShowUIElement<GameplayUIScreen>();
         }
         else
         {
-            OnAllCharactersDead();
+            Hide();
+            uiController.ShowUIElement<EndGameScreen>();
+        }
+    }
+    
+    private const float DeathAnimationFadeDuration = 1f;
+    private IEnumerator CharacterDeathAnimation(string characterName)
+    {
+        switch (characterName)
+        {
+            case "Dad":
+                _dadImage.DOFade(0f, DeathAnimationFadeDuration);
+                yield return new WaitForSeconds(DeathAnimationFadeDuration);
+                _dadImage.enabled = false;
+                break;
+
+            case "Mom":
+                _momImage.DOFade(0f, DeathAnimationFadeDuration);
+                yield return new WaitForSeconds(DeathAnimationFadeDuration);
+                _momImage.enabled = false;
+                break;
+
+            case "Kid":
+                _kidImage.DOFade(0f, DeathAnimationFadeDuration);
+                yield return new WaitForSeconds(DeathAnimationFadeDuration);
+                _kidImage.enabled = false;
+                break;
+            
+            default:
+                break;
         }
     }
 
@@ -133,27 +182,9 @@ public class CampScreen : UIScreen
 
     }
 
-    private void dayCounterInc()
-    {
-        _campSystem.CurrentDay++;
-    }
-
     private void updateCurrentFoodText()
     {
         _foodText.text = $"Food: {_campSystem.CurrentFood.ToString()}";
-    }
-
-    private void OnDayEnded()
-    {
-        dayCounterInc();
-        Hide();
-        uiController.ShowUIElement<GameplayUIScreen>();
-    }
-
-    private void OnAllCharactersDead()
-    {
-        Hide();
-        uiController.ShowUIElement<EndGameScreen>();
     }
 
     private IEnumerator showCharacterSpeech(string characterKey)
@@ -197,17 +228,19 @@ public class CampScreen : UIScreen
         _kidSpeechArea.SetActive(false);
     }
 
-    private void KillStarvingCharacters()
+    private List<string> KillStarvingCharacters()
     {
+        var result = new List<string>();
         foreach (var pair in _campSystem.Characters)
         {
             if (!pair.Value.IsFed)
             {
                 pair.Value.IsAlive = false;
-                
-                // TODO: play character Death sound
+                result.Add(pair.Value.Name);
             }
         }
+
+        return result;
     }
 
 }

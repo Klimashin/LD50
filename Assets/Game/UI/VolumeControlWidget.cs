@@ -9,7 +9,6 @@ public class VolumeControlWidget : UIWidget
     private void OnEnable()
     {
         _volumeSlider.value = _soundSystem.GetVolume();
-        Debug.Log(_soundSystem.GetVolume());
         _volumeSlider.onValueChanged.AddListener(OnSliderValueChanged);
     }
 

@@ -18,7 +18,6 @@ public class CharController : MonoBehaviour
 
     private float _distanceTraveled;
 
-
     public void Enable()
     {
         Game.InputActions.Gameplay.Action.performed += OnAction;
@@ -26,7 +25,10 @@ public class CharController : MonoBehaviour
 
     private void OnAction(InputAction.CallbackContext obj)
     {
-        // implement me
+        if (_highlightedInteraction != null)
+        {
+            _highlightedInteraction.Execute(this);
+        }
     }
     
     private static readonly int IsMoving = Animator.StringToHash("IsMoving");
@@ -125,14 +127,11 @@ public class CharController : MonoBehaviour
         }
     }
 
-    /*private void OnTriggerEnter2D(Collider2D other)
+    private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.TryGetComponent<Food>(out var food))
+        if (other.isTrigger && other.TryGetComponent<ICharacterInteraction>(out var interaction))
         {
-            _campSystem.CurrentFood += food.Amount;
-            Destroy(other.gameObject);
-            // play sound
-            // play particle vfx
+            interaction.Execute(this);
         }
-    }*/
+    }
 }

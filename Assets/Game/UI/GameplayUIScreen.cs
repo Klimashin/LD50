@@ -1,3 +1,4 @@
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -8,8 +9,21 @@ public class GameplayUIScreen : UIScreen
     [SerializeField] private Button _pauseButton;
     [SerializeField] private CampSystem _campSystem;
     [SerializeField] private TextMeshProUGUI _foodText;
+    [SerializeField] private DayProgressBar _progressBar;
+    [SerializeField] private GameObject _foodFlyingIconPrefab;
 
-    //private UIPopup _pauseMenu;
+    public void AddFoodAnimated(int amount)
+    {
+        var flyingIcon = Instantiate(_foodFlyingIconPrefab, transform);
+        flyingIcon.GetComponentInChildren<TextMeshProUGUI>().text = $"+{amount.ToString()}";
+        flyingIcon.GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
+        flyingIcon.GetComponent<RectTransform>().DOMove(_foodText.transform.position, 1f)
+            .OnComplete(() =>
+            {
+                _campSystem.CurrentFood += amount;
+                Destroy(flyingIcon);
+            });
+    }
 
     private void OnEnable()
     {

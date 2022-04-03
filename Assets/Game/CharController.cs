@@ -25,9 +25,13 @@ public class CharController : MonoBehaviour
         _initialPos = transform.position;
     }
 
-    public void Enable()
+    public void ResetPosition()
     {
         transform.position = _initialPos;
+    }
+
+    public void Enable()
+    {
         Game.InputActions.Gameplay.Action.performed += OnAction;
         enabled = true;
     }

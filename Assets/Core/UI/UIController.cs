@@ -148,7 +148,7 @@ public class UIController : MonoBehaviour
 			{
 				if (uiScreenPref.showByDefault)
 				{
-					CreateAndShowScreen(uiScreenPref);
+					CreateAndShowElement<UIScreen>(uiScreenPref);
 				}
 				else
 				{

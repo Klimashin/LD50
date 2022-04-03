@@ -15,11 +15,7 @@ public class GameplayUIScreen : UIScreen
     [SerializeField] private float _gameplayTime;
 
     private CharController _charController;
-
-    public override void OnCreate()
-    {
-        _charController = GameObject.FindGameObjectWithTag("Player").GetComponent<CharController>();
-    }
+    private PauseMenuPopup _pauseMenu;
 
     public void AddFoodAnimated(int amount)
     {
@@ -42,6 +38,11 @@ public class GameplayUIScreen : UIScreen
     protected override void OnPostShow()
     {
         base.OnPostShow();
+        _pauseMenu = uiController.GetUIElement<PauseMenuPopup>();
+        _charController = GameObject.FindGameObjectWithTag("Player").GetComponent<CharController>();
+
+        _pauseMenu.OnElementShownEvent += OnPauseMenuShown;
+        _pauseMenu.OnElementHideStartedEvent += OnPauseMenuHide;
         _pauseButton.onClick.AddListener(OnPauseButtonClick);
         Game.InputActions.Gameplay.Pause.performed += OnPauseAction;
         Game.InputActions.Gameplay.Enable();
@@ -52,14 +53,29 @@ public class GameplayUIScreen : UIScreen
     protected override void OnPreHide()
     {
         base.OnPreHide();
+
         _pauseButton.onClick.RemoveListener(OnPauseButtonClick);
         Game.InputActions.Gameplay.Pause.performed -= OnPauseAction;
+        _pauseMenu.OnElementShownEvent -= OnPauseMenuShown;
+        _pauseMenu.OnElementHideStartedEvent -= OnPauseMenuHide;
         Game.InputActions.Gameplay.Disable();
     }
 
     private void Update()
     {
         _foodText.text = $"Food: {_campSystem.CurrentFood.ToString()}";
+    }
+
+    private void OnPauseMenuShown(IUIElement menu)
+    {
+        Time.timeScale = 0;
+        _charController.Disable();
+    }
+
+    private void OnPauseMenuHide(IUIElement menu)
+    {
+        Time.timeScale = 1;
+        _charController.Enable();
     }
 
     private void OnPauseAction(InputAction.CallbackContext obj)
@@ -83,6 +99,7 @@ public class GameplayUIScreen : UIScreen
     private IEnumerator GameplayCoroutine()
     {
         _charController.Enable();
+        _charController.ResetPosition();
         
         var currentTime = 0f;
         while (currentTime <= _gameplayTime)

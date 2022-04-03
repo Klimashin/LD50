@@ -20,9 +20,7 @@ public class CampScreen : UIScreen
     [SerializeField] private TextMeshProUGUI _momSpeech;
     [SerializeField] private TextMeshProUGUI _kidSpeech;
     [SerializeField] private int _timeoutTimeSec = 2;
-
-    public Action OnAllCharactersDead;
-    public Action OnDayEnded;
+    
 
     private void OnEnable()
     {
@@ -33,8 +31,6 @@ public class CampScreen : UIScreen
         _dadFeedButton.onClick.AddListener(delegate { OnFeedButtonClick(_dadFeedButton, "Dad"); });
         _momFeedButton.onClick.AddListener(delegate { OnFeedButtonClick(_momFeedButton, "Mom"); });
         _kidFeedButton.onClick.AddListener(delegate { OnFeedButtonClick(_kidFeedButton, "Kid"); });
-        OnAllCharactersDead += endDay;
-        OnDayEnded += endGame;
     }
 
     private void OnDisable()
@@ -43,8 +39,6 @@ public class CampScreen : UIScreen
         _dadFeedButton.onClick.RemoveListener(delegate { OnFeedButtonClick(_dadFeedButton, "Dad"); });
         _momFeedButton.onClick.RemoveListener(delegate { OnFeedButtonClick(_momFeedButton, "Mom"); });
         _kidFeedButton.onClick.RemoveListener(delegate { OnFeedButtonClick(_kidFeedButton, "Kid"); });
-        OnAllCharactersDead -= endDay;
-        OnDayEnded -= endGame;
     }
 
     private void Update()
@@ -54,16 +48,20 @@ public class CampScreen : UIScreen
 
     private void OnEndDayButtonClick()
     {
-        if (сheckFedCharacters())
+        if (!сheckFedCharacters())
         {
-            if (hasAliveCharacters())
-            {
-                OnDayEnded();
-            }
-            else
-            {
-                OnAllCharactersDead();
-            }
+            return;
+        }
+
+        KillStarvingCharacters();
+        
+        if (hasAliveCharacters())
+        {
+            OnDayEnded();
+        }
+        else
+        {
+            OnAllCharactersDead();
         }
     }
 
@@ -106,13 +104,15 @@ public class CampScreen : UIScreen
     {
         foreach (var character in _campSystem.Characters)
         {
+            if (!character.Value.IsAlive)
+                continue;
+            
             if (character.Value.IsAlive && !character.Value.IsFed)
             {
                 if (_campSystem.CurrentFood >= character.Value.FoodRequired)
                 {
                     return false;
                 }
-                character.Value.IsAlive = false;
             }
         }
 
@@ -143,14 +143,14 @@ public class CampScreen : UIScreen
         _foodText.text = $"Food: {_campSystem.CurrentFood.ToString()}";
     }
 
-    private void endDay()
+    private void OnDayEnded()
     {
         dayCounterInc();
         Hide();
         uiController.ShowUIElement<GameplayUIScreen>();
     }
 
-    private void endGame()
+    private void OnAllCharactersDead()
     {
         Hide();
         uiController.ShowUIElement<EndGameScreen>();
@@ -195,6 +195,19 @@ public class CampScreen : UIScreen
         _dadSpeechArea.SetActive(false);
         _momSpeechArea.SetActive(false);
         _kidSpeechArea.SetActive(false);
+    }
+
+    private void KillStarvingCharacters()
+    {
+        foreach (var pair in _campSystem.Characters)
+        {
+            if (!pair.Value.IsFed)
+            {
+                pair.Value.IsAlive = false;
+                
+                // TODO: play character Death sound
+            }
+        }
     }
 
 }

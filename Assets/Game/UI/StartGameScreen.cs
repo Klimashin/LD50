@@ -10,8 +10,6 @@ public class StartGameScreen : UIScreen
 
     public override void OnStart()
     {
-        base.OnPostShow();
-        
         _campSystem.Reset();
         
         _startGameButton.onClick.AddListener(OnStartGameButtonClick);
@@ -27,7 +25,13 @@ public class StartGameScreen : UIScreen
 
     private IEnumerator GameplayInitializer()
     {
+        Time.timeScale = 1;
+        
         _startGameButton.interactable = false;
+
+        yield return null;
+        yield return null;
+        yield return null;
 
         var generator = FindObjectOfType<LevelGenerator>();
 

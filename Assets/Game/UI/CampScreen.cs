@@ -26,28 +26,38 @@ public class CampScreen : UIScreen
     [SerializeField] private Image _momImage;
     [SerializeField] private Image _dadImage;
 
+    private Dictionary<string, Button> _charactersButtonDict = new Dictionary<string, Button>();
+    
+    public override void OnCreate()
+    {
+        base.OnCreate();
+        _endDayButton.onClick.AddListener(OnEndDayButtonClick);
+        _charactersButtonDict["Dad"] = _dadFeedButton;
+        _charactersButtonDict["Mom"] = _momFeedButton;
+        _charactersButtonDict["Kid"] = _kidFeedButton;
+
+        _dadFeedButton.onClick.AddListener(() => { OnFeedButtonClick("Dad"); });
+        _momFeedButton.onClick.AddListener(() => { OnFeedButtonClick("Mom"); });
+        _kidFeedButton.onClick.AddListener(() => { OnFeedButtonClick("Kid"); });
+    }
+
     private void OnEnable()
     {
         setCharactersUnfed();
         updateCurrentDayText();
         hideAllSpeechAreas();
-        _endDayButton.onClick.AddListener(OnEndDayButtonClick);
-        _dadFeedButton.onClick.AddListener(delegate { OnFeedButtonClick(_dadFeedButton, "Dad"); });
-        _momFeedButton.onClick.AddListener(delegate { OnFeedButtonClick(_momFeedButton, "Mom"); });
-        _kidFeedButton.onClick.AddListener(delegate { OnFeedButtonClick(_kidFeedButton, "Kid"); });
-    }
-
-    private void OnDisable()
-    {
-        _endDayButton.onClick.RemoveListener(OnEndDayButtonClick);
-        _dadFeedButton.onClick.RemoveListener(delegate { OnFeedButtonClick(_dadFeedButton, "Dad"); });
-        _momFeedButton.onClick.RemoveListener(delegate { OnFeedButtonClick(_momFeedButton, "Mom"); });
-        _kidFeedButton.onClick.RemoveListener(delegate { OnFeedButtonClick(_kidFeedButton, "Kid"); });
     }
 
     private void Update()
     {
         updateCurrentFoodText();
+        UpdateFeedButtons();
+    }
+
+    private void UpdateFeedButtons()
+    {
+        foreach (var character in _campSystem.Characters.Values)
+            _charactersButtonDict[character.Name].gameObject.SetActive(character.IsAlive && !character.IsFed);
     }
 
     private void OnEndDayButtonClick()
@@ -114,7 +124,7 @@ public class CampScreen : UIScreen
         }
     }
 
-    private void OnFeedButtonClick(Button button, string characterKey)
+    private void OnFeedButtonClick(string characterKey)
     {
         hideAllSpeechAreas();
 
@@ -127,8 +137,6 @@ public class CampScreen : UIScreen
             StartCoroutine(showCharacterSpeech(characterKey));
             _campSystem.Characters[characterKey].IsFed = true;
             _campSystem.CurrentFood -= _campSystem.Characters[characterKey].FoodRequired;
-            button.onClick.RemoveListener(delegate { OnFeedButtonClick(button, characterKey); });
-            button.enabled = false;
         }
     }
 

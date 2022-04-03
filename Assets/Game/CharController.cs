@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -9,6 +10,9 @@ public class CharController : MonoBehaviour
     public Animator CharacterAnimator;
     public float FootstepDistance = 1f;
     public float FootstepGap = 0.25f;
+    
+    public Collider2D InteractionCollider;
+    public ContactFilter2D InteractionColliderFilter;
 
     [SerializeField] private CampSystem _campSystem;
 
@@ -27,6 +31,56 @@ public class CharController : MonoBehaviour
     
     private static readonly int IsMoving = Animator.StringToHash("IsMoving");
     private void Update()
+    {
+        InteractionHighlight();
+        
+        Movement();
+    }
+
+    private ICharacterInteraction _highlightedInteraction;
+    private readonly List<Collider2D> _collidersCache = new List<Collider2D>();
+    private void InteractionHighlight()
+    {
+        _collidersCache.Clear();
+        var count = InteractionCollider.OverlapCollider(InteractionColliderFilter, _collidersCache);
+        if (count == 0)
+        {
+            _highlightedInteraction?.Highlight(false);
+            _highlightedInteraction = null;
+            return;
+        }
+
+        ICharacterInteraction closestInteraction = null;
+        var closestDistance = float.MaxValue;
+        foreach (var col in _collidersCache)
+        {
+            var containsInteraction = col.TryGetComponent<ICharacterInteraction>(out var interaction);
+            if (!containsInteraction)
+                continue;
+
+            var distance = Vector2.Distance(InteractionCollider.bounds.center, col.bounds.center);
+            if (distance < closestDistance)
+            {
+                closestInteraction = interaction;
+            }
+        }
+        
+        if (closestInteraction == null)
+        {
+            _highlightedInteraction?.Highlight(false);
+            _highlightedInteraction = null;
+            return;
+        }
+        
+        if (closestInteraction != _highlightedInteraction)
+        {
+            _highlightedInteraction?.Highlight(false);
+            _highlightedInteraction = closestInteraction;
+            _highlightedInteraction.Highlight(true);
+        }
+    }
+
+    private void Movement()
     {
         var input = Game.InputActions.Gameplay.Move.ReadValue<Vector2>();
         var direction = Vector2.zero;
@@ -71,7 +125,7 @@ public class CharController : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
+    /*private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.TryGetComponent<Food>(out var food))
         {
@@ -80,5 +134,5 @@ public class CharController : MonoBehaviour
             // play sound
             // play particle vfx
         }
-    }
+    }*/
 }

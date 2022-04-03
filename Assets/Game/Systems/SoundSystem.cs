@@ -7,9 +7,17 @@ public class SoundSystem : ScriptableObject
     [SerializeField] private AudioMixer _audioMixer;
     [SerializeField] private string VolumeVariableName;
 
+    private float Volume { get; set; } = 1;
+
     public void SetVolume(float v)
     {
-        var volumeLvl = v > float.Epsilon ? 20 * Mathf.Log10(v) : -144f;
+        Volume = v;
+        var volumeLvl = v > float.Epsilon ? 20 * Mathf.Log10(Volume) : -144f;
         _audioMixer.SetFloat(VolumeVariableName, volumeLvl);
+    }
+
+    public float GetVolume()
+    {
+        return Volume;
     }
 }

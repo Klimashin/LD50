@@ -4,7 +4,7 @@ using UnityEngine.Experimental.Rendering.Universal;
 
 public class ShadowcasterCuller : MonoBehaviour
 {
-    private Behaviour _shadowcaster;
+    private ShadowCaster2D _shadowcaster;
 
     private int _count = 0;
 
@@ -43,10 +43,10 @@ public class ShadowcasterCuller : MonoBehaviour
         }
     }
 
-    public void Init(Behaviour shadowcaster)
+    public void Init(ShadowCaster2D shadowcaster)
     {
         _shadowcaster = shadowcaster;
-        _isShadowcasterActive = _shadowcaster.enabled;
+        _isShadowcasterActive = _shadowcaster.castsShadows;
 
         foreach (var renderer in gameObject.GetComponentsInChildren<Renderer>(true))
         {
@@ -56,7 +56,23 @@ public class ShadowcasterCuller : MonoBehaviour
 
     private void Update()
     {
-        if (_isShadowcasterActive != (_visibleRendererCount > 0))
-            _shadowcaster.enabled = _isShadowcasterActive = (_visibleRendererCount > 0);
+        if (
+            _isShadowcasterActive && _visibleRendererCount > 0
+            || !_isShadowcasterActive && _visibleRendererCount == 0
+        )
+        {
+            return;
+        }
+        
+        if (_isShadowcasterActive && _visibleRendererCount == 0)
+        {
+            _shadowcaster.castsShadows = false;
+            _isShadowcasterActive = false;
+        }
+        else
+        {
+            _shadowcaster.castsShadows = true;
+            _isShadowcasterActive = true;
+        }
     }
 }

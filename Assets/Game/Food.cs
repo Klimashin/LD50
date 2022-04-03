@@ -7,7 +7,7 @@ public class Food : GeneratedItem, ICharacterInteraction
 
     public override void Execute(CharController character)
     {
-        character.AddFood(Amount);
+        UI.controller.GetUIElement<GameplayUIScreen>().AddFoodAnimated(Amount);
         Destroy(gameObject);
     }
 }

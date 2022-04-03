@@ -27,4 +27,5 @@ public class CharacterData
     public bool IsAlive;
     public bool IsFed;
     public int FoodRequired;
+    public  string[] SpeechArray;
 }

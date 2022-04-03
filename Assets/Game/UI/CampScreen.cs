@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -12,6 +13,13 @@ public class CampScreen : UIScreen
     [SerializeField] private Button _kidFeedButton;
     [SerializeField] private TextMeshProUGUI _foodText;
     [SerializeField] private TextMeshProUGUI _currentDayText;
+    [SerializeField] private GameObject _dadSpeechArea;
+    [SerializeField] private GameObject _momSpeechArea;
+    [SerializeField] private GameObject _kidSpeechArea;
+    [SerializeField] private TextMeshProUGUI _dadSpeech;
+    [SerializeField] private TextMeshProUGUI _momSpeech;
+    [SerializeField] private TextMeshProUGUI _kidSpeech;
+    [SerializeField] private int _timeoutTimeSec = 2;
 
     public Action OnAllCharactersDead;
     public Action OnDayEnded;
@@ -20,6 +28,9 @@ public class CampScreen : UIScreen
     {
         setCharactersUnfed();
         updateCurrentDayText();
+        _dadSpeechArea.SetActive(false);
+        _momSpeechArea.SetActive(false);
+        _kidSpeechArea.SetActive(false);
         _endDayButton.onClick.AddListener(OnEndDayButtonClick);
         _dadFeedButton.onClick.AddListener(delegate { OnFeedButtonClick(_dadFeedButton, "Dad"); });
         _momFeedButton.onClick.AddListener(delegate { OnFeedButtonClick(_momFeedButton, "Mom"); });
@@ -50,7 +61,9 @@ public class CampScreen : UIScreen
             if (hasAliveCharacters())
             {
                 OnDayEnded();
-            } else {
+            }
+            else
+            {
                 OnAllCharactersDead();
             }
 
@@ -62,12 +75,15 @@ public class CampScreen : UIScreen
 
     private void OnFeedButtonClick(Button button, string characterKey)
     {
+        hideAllSpeechAreas();
+
         if (
             _campSystem.Characters[characterKey].IsAlive
             && !_campSystem.Characters[characterKey].IsFed
             && _campSystem.CurrentFood >= _campSystem.Characters[characterKey].FoodRequired
             )
         {
+            StartCoroutine(showCharacterSpeech(characterKey));
             _campSystem.Characters[characterKey].IsFed = true;
             _campSystem.CurrentFood -= _campSystem.Characters[characterKey].FoodRequired;
             button.onClick.RemoveListener(delegate { OnFeedButtonClick(button, characterKey); });
@@ -141,6 +157,47 @@ public class CampScreen : UIScreen
     private void endGame()
     {
         Debug.Log("endGame");
+    }
+
+    private IEnumerator showCharacterSpeech(string characterKey)
+    {
+        string[] CharacterSpeechArray = _campSystem.Characters[characterKey].SpeechArray;
+        string speech = CharacterSpeechArray[new System.Random().Next(0, CharacterSpeechArray.Length)];
+        Debug.Log(speech);
+
+        switch (characterKey)
+        {
+            case "Dad":
+                _dadSpeech.text = speech;
+                _dadSpeechArea.SetActive(true);
+                yield return new WaitForSeconds(_timeoutTimeSec);
+                _dadSpeechArea.SetActive(false);
+                break;
+
+            case "Mom":
+                _momSpeech.text = speech;
+                _momSpeechArea.SetActive(true);
+                yield return new WaitForSeconds(_timeoutTimeSec);
+                _momSpeechArea.SetActive(false);
+                break;
+
+            case "Kid":
+                _kidSpeech.text = speech;
+                _kidSpeechArea.SetActive(true);
+                yield return new WaitForSeconds(_timeoutTimeSec);
+                _kidSpeechArea.SetActive(false);
+                break;
+            default:
+                break;
+        }
+
+    }
+
+    private void hideAllSpeechAreas()
+    {
+        _dadSpeechArea.SetActive(false);
+        _momSpeechArea.SetActive(false);
+        _kidSpeechArea.SetActive(false);
     }
 
 }

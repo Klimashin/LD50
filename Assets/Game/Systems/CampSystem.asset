@@ -19,14 +19,24 @@ MonoBehaviour:
     - Kid
     _valueData:
     - Name: Dad
-      IsAlive: 0
+      IsAlive: 1
       IsFed: 0
       FoodRequired: 1
+      SpeechArray:
+      - gdfgdfgdf
+      - qwijkjkbjkh
     - Name: Mom
-      IsAlive: 0
+      IsAlive: 1
       IsFed: 0
       FoodRequired: 1
+      SpeechArray:
+      - sfsrfsef
+      - sdvfcvbcb
+      - poiiouiuyui
     - Name: Kid
-      IsAlive: 0
+      IsAlive: 1
       IsFed: 0
       FoodRequired: 1
+      SpeechArray:
+      - qwert
+      - trewq

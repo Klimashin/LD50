@@ -30,7 +30,6 @@ public class LevelGenerator : MonoBehaviour
             var result = new List<Collider2D>();
             var filter = new ContactFilter2D { useLayerMask = true, layerMask = GenerationLayerMask };
             var castResultsCount = obstaclesCastCollider.OverlapCollider(filter, result);
-            Debug.Log(castResultsCount);
             if (castResultsCount > 0)
             {
                 Destroy(levelObject.gameObject);

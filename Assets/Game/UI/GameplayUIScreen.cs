@@ -63,7 +63,7 @@ public class GameplayUIScreen : UIScreen
 
     private void Update()
     {
-        _foodText.text = $"Food: {_campSystem.CurrentFood.ToString()}";
+        _foodText.text = $"X {_campSystem.CurrentFood.ToString()}";
     }
 
     private void OnPauseMenuShown(IUIElement menu)

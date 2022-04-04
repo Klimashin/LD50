@@ -22,7 +22,7 @@ public abstract class GeneratedItem : MonoBehaviour, ICharacterInteraction
         }
     }
     
-    private readonly Color _highlightOnColor = Color.red;
+    private readonly Color _highlightOnColor = Color.green;
     private readonly Color _highlightOffColor = Color.white;
     private List<SpriteRenderer> _renderers;
     public void Highlight(bool isOn)

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76aa3186fb1f7fc4b9e4fff2ffd4e1b4, type: 3}
   m_Name: CampSystem
   m_EditorClassIdentifier: 
-  InitialFood: 0
+  InitialFood: 2
   Characters:
     _keyData:
     - Dad

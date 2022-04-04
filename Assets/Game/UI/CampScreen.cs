@@ -32,6 +32,8 @@ public class CampScreen : UIScreen
     GraphicRaycaster _uiRaycaster;
     PointerEventData _clickData;
     List<RaycastResult> _clickResults;
+    private float _audioTimeCached;
+    private AudioSource _campAudio;
 
     public override void OnCreate()
     {
@@ -41,6 +43,23 @@ public class CampScreen : UIScreen
         _clickData = new PointerEventData(EventSystem.current);
         _clickResults = new List<RaycastResult>();
         _endDayButton.onClick.AddListener(OnEndDayButtonClick);
+        _campAudio = GetComponent<AudioSource>();
+    }
+
+    protected override void OnPreHide()
+    {
+        _audioTimeCached = _campAudio.time;
+        _campAudio.Pause();
+    }
+
+    protected override void OnPostShow()
+    {
+        base.OnPreHide();
+        
+        _campAudio.volume = 0f;
+        _campAudio.time = _audioTimeCached;
+        _campAudio.Play();
+        _campAudio.DOFade(1f, 1f);
     }
 
     private void OnEnable()

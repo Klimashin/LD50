@@ -17,6 +17,7 @@ public class GameplayUIScreen : UIScreen
     private CharController _charController;
     private PauseMenuPopup _pauseMenu;
     private AudioSource _gameplayAudio;
+    private float _audioTimeCached;
 
     public override void OnCreate()
     {
@@ -55,6 +56,7 @@ public class GameplayUIScreen : UIScreen
         Game.InputActions.Gameplay.Enable();
         Cursor.visible = false;
         _gameplayAudio.volume = 0f;
+        _gameplayAudio.time = _audioTimeCached;
         _gameplayAudio.Play();
         _gameplayAudio.DOFade(1f, 1f);
 
@@ -71,6 +73,7 @@ public class GameplayUIScreen : UIScreen
         _pauseMenu.OnElementHideStartedEvent -= OnPauseMenuHide;
         Game.InputActions.Gameplay.Disable();
         Cursor.visible = true;
+        _audioTimeCached = _gameplayAudio.time;
         _gameplayAudio.Pause();
     }
 

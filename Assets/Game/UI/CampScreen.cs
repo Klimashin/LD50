@@ -5,6 +5,8 @@ using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 
 public class CampScreen : UIScreen
 {
@@ -25,20 +27,23 @@ public class CampScreen : UIScreen
     [SerializeField] private Image _kidImage;
     [SerializeField] private Image _momImage;
     [SerializeField] private Image _dadImage;
+    [SerializeField] private Image _kidFoodImage;
+    [SerializeField] private Image _momFoodImage;
+    [SerializeField] private Image _dadFoodImage;
 
-    private Dictionary<string, Button> _charactersButtonDict = new Dictionary<string, Button>();
-    
+    [SerializeField] private GameObject _uiCanvas;
+    GraphicRaycaster _uiRaycaster;
+    PointerEventData _clickData;
+    List<RaycastResult> _clickResults;
+
     public override void OnCreate()
     {
         base.OnCreate();
-        _endDayButton.onClick.AddListener(OnEndDayButtonClick);
-        _charactersButtonDict["Dad"] = _dadFeedButton;
-        _charactersButtonDict["Mom"] = _momFeedButton;
-        _charactersButtonDict["Kid"] = _kidFeedButton;
 
-        _dadFeedButton.onClick.AddListener(() => { OnFeedButtonClick("Dad"); });
-        _momFeedButton.onClick.AddListener(() => { OnFeedButtonClick("Mom"); });
-        _kidFeedButton.onClick.AddListener(() => { OnFeedButtonClick("Kid"); });
+        _uiRaycaster = _uiCanvas.GetComponent<GraphicRaycaster>();
+        _clickData = new PointerEventData(EventSystem.current);
+        _clickResults = new List<RaycastResult>();
+        _endDayButton.onClick.AddListener(OnEndDayButtonClick);
     }
 
     private void OnEnable()
@@ -46,18 +51,17 @@ public class CampScreen : UIScreen
         setCharactersUnfed();
         updateCurrentDayText();
         hideAllSpeechAreas();
+        checkEndDayButton();
     }
 
     private void Update()
     {
         updateCurrentFoodText();
-        UpdateFeedButtons();
-    }
-
-    private void UpdateFeedButtons()
-    {
-        foreach (var character in _campSystem.Characters.Values)
-            _charactersButtonDict[character.Name].gameObject.SetActive(character.IsAlive && !character.IsFed);
+        checkEndDayButton();
+        if (Mouse.current.leftButton.wasReleasedThisFrame)
+        {
+            GetUiElementsClicked();
+        }
     }
 
     private void OnEndDayButtonClick()
@@ -66,14 +70,14 @@ public class CampScreen : UIScreen
         {
             return;
         }
-        
+
         StartCoroutine(EndDayCoroutine());
     }
 
     private IEnumerator EndDayCoroutine()
     {
         yield return null;
-        
+
         var charactersDiedToday = KillStarvingCharacters();
         if (charactersDiedToday.Count > 0)
         {
@@ -82,7 +86,7 @@ public class CampScreen : UIScreen
                 yield return StartCoroutine(CharacterDeathAnimation(characterName));
             }
         }
-        
+
         if (hasAliveCharacters())
         {
             _campSystem.CurrentDay++;
@@ -95,7 +99,7 @@ public class CampScreen : UIScreen
             uiController.ShowUIElement<EndGameScreen>();
         }
     }
-    
+
     private const float DeathAnimationFadeDuration = 1f;
     private IEnumerator CharacterDeathAnimation(string characterName)
     {
@@ -118,7 +122,7 @@ public class CampScreen : UIScreen
                 yield return new WaitForSeconds(DeathAnimationFadeDuration);
                 _kidImage.enabled = false;
                 break;
-            
+
             default:
                 break;
         }
@@ -134,12 +138,34 @@ public class CampScreen : UIScreen
             && _campSystem.CurrentFood >= _campSystem.Characters[characterKey].FoodRequired
             )
         {
+            showCharactersFood(characterKey);
             StartCoroutine(showCharacterSpeech(characterKey));
             _campSystem.Characters[characterKey].IsFed = true;
             _campSystem.CurrentFood -= _campSystem.Characters[characterKey].FoodRequired;
         }
     }
 
+    private void showCharactersFood(string characterName)
+    {
+        switch (characterName)
+        {
+            case "Dad":
+                _dadFoodImage.enabled = true;
+                break;
+
+            case "Mom":
+                _momFoodImage.enabled = true;
+                break;
+
+            case "Kid":
+                _kidFoodImage.enabled = true;
+                break;
+
+            default:
+                break;
+        }
+
+    }
     private void setCharactersUnfed()
     {
 
@@ -150,6 +176,10 @@ public class CampScreen : UIScreen
                 character.Value.IsFed = false;
             }
         }
+
+        _dadFoodImage.enabled = false;
+        _momFoodImage.enabled = false;
+        _kidFoodImage.enabled = false;
     }
 
     private void updateCurrentDayText()
@@ -163,7 +193,7 @@ public class CampScreen : UIScreen
         {
             if (!character.Value.IsAlive)
                 continue;
-            
+
             if (character.Value.IsAlive && !character.Value.IsFed)
             {
                 if (_campSystem.CurrentFood >= character.Value.FoodRequired)
@@ -249,6 +279,43 @@ public class CampScreen : UIScreen
         }
 
         return result;
+    }
+
+    private void GetUiElementsClicked()
+    {
+        _clickData.position = Mouse.current.position.ReadValue();
+        _clickResults.Clear();
+
+        _uiRaycaster.Raycast(_clickData, _clickResults);
+
+        foreach (RaycastResult result in _clickResults)
+        {
+            GameObject uiElement = result.gameObject;
+
+            switch (uiElement.name)
+            {
+                case "DadImage":
+                    OnFeedButtonClick("Dad");
+                    break;
+
+                case "MomImage":
+                    OnFeedButtonClick("Mom");
+                    break;
+
+                case "KidImage":
+                    OnFeedButtonClick("Kid");
+                    break;
+                default:
+                    break;
+            }
+
+            Debug.Log(uiElement.name);
+        }
+    }
+
+    private void checkEndDayButton()
+    {
+        _endDayButton.gameObject.SetActive(сheckFedCharacters());
     }
 
 }

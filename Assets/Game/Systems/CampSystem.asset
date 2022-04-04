@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76aa3186fb1f7fc4b9e4fff2ffd4e1b4, type: 3}
   m_Name: CampSystem
   m_EditorClassIdentifier: 
+  InitialFood: 0
   Characters:
     _keyData:
     - Dad
@@ -19,24 +20,24 @@ MonoBehaviour:
     - Kid
     _valueData:
     - Name: Dad
-      IsAlive: 1
+      IsAlive: 0
       IsFed: 0
       FoodRequired: 1
       SpeechArray:
-      - gdfgdfgdf
-      - qwijkjkbjkh
+      - Thanks
+      - Thanks so much
     - Name: Mom
-      IsAlive: 1
+      IsAlive: 0
       IsFed: 0
       FoodRequired: 1
       SpeechArray:
-      - sfsrfsef
-      - sdvfcvbcb
-      - poiiouiuyui
+      - Thanks for that
+      - Thanks again
+      - Thanks for trying
     - Name: Kid
-      IsAlive: 1
+      IsAlive: 0
       IsFed: 0
       FoodRequired: 1
       SpeechArray:
-      - qwert
-      - trewq
+      - Thanks a lot
+      - Thanks very much

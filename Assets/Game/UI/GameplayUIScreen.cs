@@ -46,6 +46,7 @@ public class GameplayUIScreen : UIScreen
         _pauseButton.onClick.AddListener(OnPauseButtonClick);
         Game.InputActions.Gameplay.Pause.performed += OnPauseAction;
         Game.InputActions.Gameplay.Enable();
+        Cursor.visible = false;
 
         StartCoroutine(GameplayCoroutine());
     }
@@ -59,6 +60,7 @@ public class GameplayUIScreen : UIScreen
         _pauseMenu.OnElementShownEvent -= OnPauseMenuShown;
         _pauseMenu.OnElementHideStartedEvent -= OnPauseMenuHide;
         Game.InputActions.Gameplay.Disable();
+        Cursor.visible = true;
     }
 
     private void Update()
@@ -70,12 +72,15 @@ public class GameplayUIScreen : UIScreen
     {
         Time.timeScale = 0;
         _charController.Disable();
+        Cursor.visible = true;
     }
 
     private void OnPauseMenuHide(IUIElement menu)
     {
         Time.timeScale = 1;
         _charController.Enable();
+        Cursor.visible = false;
+        Debug.Log("HERE");
     }
 
     private void OnPauseAction(InputAction.CallbackContext obj)

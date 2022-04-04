@@ -20,24 +20,47 @@ MonoBehaviour:
     - Kid
     _valueData:
     - Name: Dad
-      IsAlive: 0
+      IsAlive: 1
       IsFed: 0
       FoodRequired: 1
       SpeechArray:
-      - Thanks
-      - Thanks so much
+      - I should count our supplies again
+      - I should count our supplies again
+      - I hope the government will find us soon
+      - Even eating is painful, but at least I'm still alive
+      - I still hear that low buzzing in my ears
+      - Another day passed. But what's the point?
+      - Hey, I have a joke.... ahh... nevermind
+      - How much soup is too much? Definitely not this much.
+      - Well... after all, this survival videos on You Tube aren't realy helpfull
+      - God bless the can opener
     - Name: Mom
-      IsAlive: 0
+      IsAlive: 1
       IsFed: 0
       FoodRequired: 1
       SpeechArray:
-      - Thanks for that
-      - Thanks again
-      - Thanks for trying
+      - I feel a little better now
+      - How long are we here?
+      - How did it come to this..
+      - The sun was so beautiful back then
+      - Can't believe I made it through another day
+      - I'm constantly freezing
+      - Every second I wish to wake up
+      - At least, we are here together
+      - Do you taste something metallic?
+      - Can-do attitude could be really helpful these times
     - Name: Kid
-      IsAlive: 0
+      IsAlive: 1
       IsFed: 0
       FoodRequired: 1
       SpeechArray:
-      - Thanks a lot
-      - Thanks very much
+      - When this ends I will see my friends again
+      - It's like fallout, but no fun..
+      - What month is it today?
+      - It was the tastiest canned beans in my life
+      - Let's play "last letter" game again!
+      - I wonder, how long does nuclear winter lasts?
+      - Why didnt we meet other people yet? I hope we are not the only survivors.
+      - I miss times when math test was my  biggest proplem
+      - Do you think it's dangerous to play snowballs outside?
+      - God, can you hear us? Where are you?

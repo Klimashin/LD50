@@ -23,7 +23,7 @@ public class CampScreen : UIScreen
     [SerializeField] private TextMeshProUGUI _dadSpeech;
     [SerializeField] private TextMeshProUGUI _momSpeech;
     [SerializeField] private TextMeshProUGUI _kidSpeech;
-    [SerializeField] private int _timeoutTimeSec = 2;
+    [SerializeField] private int _timeoutTimeSec = 5;
     [SerializeField] private Image _kidImage;
     [SerializeField] private Image _momImage;
     [SerializeField] private Image _dadImage;
@@ -145,11 +145,8 @@ public class CampScreen : UIScreen
                 break;
         }
     }
-
     private void OnFeedButtonClick(string characterKey)
     {
-        hideAllSpeechAreas();
-
         if (
             _campSystem.Characters[characterKey].IsAlive
             && !_campSystem.Characters[characterKey].IsFed

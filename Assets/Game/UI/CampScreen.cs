@@ -27,6 +27,8 @@ public class CampScreen : UIScreen
     [SerializeField] private Image _kidFoodImage;
     [SerializeField] private Image _momFoodImage;
     [SerializeField] private Image _dadFoodImage;
+    [SerializeField] private SoundSystem _soundSystem;
+    [SerializeField] private AudioClip _deathbellAudio;
 
     [SerializeField] private GameObject _uiCanvas;
     GraphicRaycaster _uiRaycaster;
@@ -67,7 +69,7 @@ public class CampScreen : UIScreen
         setCharactersUnfed();
         updateCurrentDayText();
         hideAllSpeechAreas();
-        checkEndDayButton();
+        _endDayButtonClicked = false;
     }
 
     private void Update()
@@ -86,12 +88,14 @@ public class CampScreen : UIScreen
         {
             return;
         }
-
+        
         StartCoroutine(EndDayCoroutine());
     }
 
     private IEnumerator EndDayCoroutine()
     {
+        _endDayButtonClicked = true;
+        
         yield return null;
 
         var charactersDiedToday = KillStarvingCharacters();
@@ -101,6 +105,8 @@ public class CampScreen : UIScreen
             {
                 yield return StartCoroutine(CharacterDeathAnimation(characterName));
             }
+
+            yield return new WaitForSeconds(DeathAnimationFadeDuration);
         }
 
         if (hasAliveCharacters())
@@ -116,9 +122,10 @@ public class CampScreen : UIScreen
         }
     }
 
-    private const float DeathAnimationFadeDuration = 1f;
+    private const float DeathAnimationFadeDuration = 2f;
     private IEnumerator CharacterDeathAnimation(string characterName)
     {
+        _soundSystem.PlayOneShot(_deathbellAudio);
         switch (characterName)
         {
             case "Dad":
@@ -253,7 +260,7 @@ public class CampScreen : UIScreen
 
     private void updateCurrentFoodText()
     {
-        _foodText.text = $"Food: {_campSystem.CurrentFood.ToString()}";
+        _foodText.text = $"X {_campSystem.CurrentFood.ToString()}";
     }
 
     private IEnumerator showCharacterSpeech(string characterKey)
@@ -300,12 +307,12 @@ public class CampScreen : UIScreen
     private List<string> KillStarvingCharacters()
     {
         var result = new List<string>();
-        foreach (var pair in _campSystem.Characters)
+        foreach (var character in _campSystem.Characters.Values)
         {
-            if (!pair.Value.IsFed)
+            if (character.IsAlive && !character.IsFed)
             {
-                pair.Value.IsAlive = false;
-                result.Add(pair.Value.Name);
+                character.IsAlive = false;
+                result.Add(character.Name);
             }
         }
 
@@ -344,9 +351,10 @@ public class CampScreen : UIScreen
         }
     }
 
+    private bool _endDayButtonClicked;
     private void checkEndDayButton()
     {
-        _endDayButton.gameObject.SetActive(сheckFedCharacters());
+        _endDayButton.gameObject.SetActive(!_endDayButtonClicked && сheckFedCharacters());
     }
 
 }

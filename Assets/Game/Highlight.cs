@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -27,6 +28,17 @@ public class Highlight : MonoBehaviour
         )
         {
             _highlightOn.SetActive(true);
+        }
+    }
+
+    private void Update()
+    {
+        string characterName = _charactersNameDict[_characterImage.name];
+        if (!_campSystem.Characters[characterName].IsAlive
+            || _campSystem.Characters[characterName].IsFed
+            || _campSystem.CurrentFood < _campSystem.Characters[characterName].FoodRequired)
+        {
+            _highlightOn.SetActive(false);
         }
     }
 }

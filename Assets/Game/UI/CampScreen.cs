@@ -12,9 +12,6 @@ public class CampScreen : UIScreen
 {
     [SerializeField] private CampSystem _campSystem;
     [SerializeField] private Button _endDayButton;
-    [SerializeField] private Button _dadFeedButton;
-    [SerializeField] private Button _momFeedButton;
-    [SerializeField] private Button _kidFeedButton;
     [SerializeField] private TextMeshProUGUI _foodText;
     [SerializeField] private TextMeshProUGUI _currentDayText;
     [SerializeField] private GameObject _dadSpeechArea;

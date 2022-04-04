@@ -47,7 +47,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   GenerationChance: 20
   Amount: 1
-  Sfx: {fileID: 8300000, guid: d9f5b3e78493e6d44bf6c9351498a15d, type: 3}
+  Sfx: {fileID: 8300000, guid: 9b254c1736c791d4d9ca70b1feb2af0f, type: 3}
   _soundSystem: {fileID: 11400000, guid: 37f59fd04fd7be049ae539f1127d5871, type: 2}
 --- !u!58 &8914259436610638921
 CircleCollider2D:

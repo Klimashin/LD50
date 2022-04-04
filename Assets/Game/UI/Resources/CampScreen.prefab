@@ -545,6 +545,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3369221296543899745}
   - component: {fileID: 6992660645227221175}
+  - component: {fileID: 5133586549913822605}
   m_Layer: 5
   m_Name: CampScreen
   m_TagString: Untagged
@@ -613,6 +614,102 @@ MonoBehaviour:
   _momFoodImage: {fileID: 2597446031094355665}
   _dadFoodImage: {fileID: 5953780553514656851}
   _uiCanvas: {fileID: 2920336310992381995}
+--- !u!82 &5133586549913822605
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3619973607868595581}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 6171328364708562571, guid: b6c9a6bd2957b7a46b439646a1fb5574, type: 2}
+  m_audioClip: {fileID: 8300000, guid: c7946dbf880060c4db55ba20f852082f, type: 3}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 1
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &4117088721817334287
 GameObject:
   m_ObjectHideFlags: 0
@@ -898,8 +995,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0d16b8da41f6604eb1283e6cdbb38a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  highlightOn: {fileID: 2510394771958844745}
-  characterImage: {fileID: 127303852706475785}
+  _highlightOn: {fileID: 2510394771958844745}
+  _characterImage: {fileID: 127303852706475785}
   _campSystem: {fileID: 11400000, guid: d0ef8547f0e24094eba587ce160e9c80, type: 2}
 --- !u!1 &5225881020797184849
 GameObject:
@@ -935,10 +1032,10 @@ RectTransform:
   m_Father: {fileID: 3369221296543899745}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 4.5927, y: -237.83983}
-  m_SizeDelta: {x: 368.196, y: 120.3203}
+  m_AnchorMin: {x: 0.5, y: 1}
+  m_AnchorMax: {x: 0.5, y: 1}
+  m_AnchoredPosition: {x: -3, y: -290}
+  m_SizeDelta: {x: 368.196, y: 120.32031}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8933732818343320167
 CanvasRenderer:
@@ -968,7 +1065,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 21300000, guid: 7f2e191cb645ab74abf5b698842a78fe, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1233,8 +1330,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0d16b8da41f6604eb1283e6cdbb38a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  highlightOn: {fileID: 571026934778316528}
-  characterImage: {fileID: 5947322960252132772}
+  _highlightOn: {fileID: 571026934778316528}
+  _characterImage: {fileID: 5947322960252132772}
   _campSystem: {fileID: 11400000, guid: d0ef8547f0e24094eba587ce160e9c80, type: 2}
 --- !u!1 &6624044180540256349
 GameObject:
@@ -1301,7 +1398,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: END DAY
+  m_text: END THE  DAY
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1310,8 +1407,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4281479730
-  m_fontColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+    rgba: 4279308676
+  m_fontColor: {r: 0.5176471, g: 0.06666667, b: 0.06666667, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -1328,13 +1425,13 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 24
-  m_fontSizeBase: 24
+  m_fontSize: 36
+  m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 0
+  m_fontStyle: 1
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
@@ -1580,8 +1677,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0d16b8da41f6604eb1283e6cdbb38a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  highlightOn: {fileID: 4117088721817334287}
-  characterImage: {fileID: 752325319834725575}
+  _highlightOn: {fileID: 4117088721817334287}
+  _characterImage: {fileID: 752325319834725575}
   _campSystem: {fileID: 11400000, guid: d0ef8547f0e24094eba587ce160e9c80, type: 2}
 --- !u!1001 &247704529811046998
 PrefabInstance:
@@ -1850,6 +1947,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2564096190701510772
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3158062308540561008}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3245ec927659c4140ac4f8d17403cc18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_HorizontalFit: 2
+  m_VerticalFit: 2
 --- !u!114 &3577991263563149140
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1876,20 +1987,6 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
---- !u!114 &2564096190701510772
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3158062308540561008}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3245ec927659c4140ac4f8d17403cc18, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_HorizontalFit: 2
-  m_VerticalFit: 2
 --- !u!1001 &6261474640866717647
 PrefabInstance:
   m_ObjectHideFlags: 0

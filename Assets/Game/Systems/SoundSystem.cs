@@ -20,4 +20,17 @@ public class SoundSystem : ScriptableObject
     {
         return Volume;
     }
+
+    private AudioSource _oneShotAudio;
+    public void PlayOneShot(AudioClip clip)
+    {
+        if (_oneShotAudio == null)
+        {
+            _oneShotAudio = (new GameObject()).AddComponent<AudioSource>();
+            GameObject.DontDestroyOnLoad(_oneShotAudio);
+            _oneShotAudio.outputAudioMixerGroup = _audioMixer.FindMatchingGroups("Sfx")[0];
+        }
+        
+        _oneShotAudio.PlayOneShot(clip);
+    }
 }

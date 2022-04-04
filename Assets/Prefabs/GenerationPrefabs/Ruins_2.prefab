@@ -11,7 +11,8 @@ GameObject:
   - component: {fileID: 3107563458383673880}
   - component: {fileID: 6761837978742105390}
   - component: {fileID: 7923339082489759159}
-  m_Layer: 0
+  - component: {fileID: 5667239044117881992}
+  m_Layer: 6
   m_Name: Ruins_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -78,7 +79,7 @@ MonoBehaviour:
   - {x: -4.6245418, y: -1.7845173, z: 0}
   m_ShapePathHash: -96315731
   m_Mesh: {fileID: 0}
-  m_InstanceId: 108482
+  m_InstanceId: 53076
 --- !u!114 &7923339082489759159
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -91,6 +92,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e7340e8e5fadbd4499225428980655d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!61 &5667239044117881992
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3107563458383673883}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.098733425, y: 1.3329011}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 10.162461, y: 9.866262}
+  m_EdgeRadius: 0
 --- !u!1 &4681629133339054263
 GameObject:
   m_ObjectHideFlags: 0
@@ -154,7 +181,7 @@ MonoBehaviour:
   - {x: -2.7693572, y: 3.963242, z: 0.00000011920929}
   m_ShapePathHash: -2093576826
   m_Mesh: {fileID: 0}
-  m_InstanceId: 108478
+  m_InstanceId: 53072
 --- !u!114 &4155625127614573317
 MonoBehaviour:
   m_ObjectHideFlags: 0

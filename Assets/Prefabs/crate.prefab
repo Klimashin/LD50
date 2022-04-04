@@ -133,6 +133,8 @@ MonoBehaviour:
   GenerationChance: 10
   Amount: 3
   BrokenSprite: {fileID: 21300000, guid: 471a4157d7bc40245b8c690fe51d35f0, type: 3}
+  Sfx: {fileID: 8300000, guid: 41466247456db1d47911aa998d18fa46, type: 3}
+  _soundSystem: {fileID: 11400000, guid: 37f59fd04fd7be049ae539f1127d5871, type: 2}
 --- !u!61 &8866656024095807785
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -205,7 +207,7 @@ MonoBehaviour:
   - {x: -0.5, y: 0.5, z: 0}
   m_ShapePathHash: 0
   m_Mesh: {fileID: 0}
-  m_InstanceId: 70870
+  m_InstanceId: 78732
 --- !u!114 &7499142923557882528
 MonoBehaviour:
   m_ObjectHideFlags: 0

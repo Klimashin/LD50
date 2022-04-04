@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3615839254923726036}
   - component: {fileID: 3615839254923725995}
-  - component: {fileID: 2119189666371894705}
+  - component: {fileID: 8914259436610638921}
   m_Layer: 0
   m_Name: food_item
   m_TagString: Untagged
@@ -47,8 +47,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   GenerationChance: 20
   Amount: 1
---- !u!60 &2119189666371894705
-PolygonCollider2D:
+  Sfx: {fileID: 8300000, guid: d9f5b3e78493e6d44bf6c9351498a15d, type: 3}
+  _soundSystem: {fileID: 11400000, guid: 37f59fd04fd7be049ae539f1127d5871, type: 2}
+--- !u!58 &8914259436610638921
+CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -60,24 +62,9 @@ PolygonCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Points:
-    m_Paths:
-    - - {x: -0.007148862, y: 0.28154072}
-      - {x: -0.51855105, y: 0.0695305}
-      - {x: -0.43117893, y: -0.11292438}
-      - {x: -0.064599335, y: -0.24144444}
-      - {x: 0.43408513, y: -0.19064158}
-      - {x: 0.46136022, y: 0.105274856}
+  m_Offset: {x: 0, y: 0.010723263}
+  serializedVersion: 2
+  m_Radius: 0.40706494
 --- !u!1 &5067697690058230554
 GameObject:
   m_ObjectHideFlags: 0

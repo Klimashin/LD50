@@ -16,6 +16,13 @@ public class GameplayUIScreen : UIScreen
 
     private CharController _charController;
     private PauseMenuPopup _pauseMenu;
+    private AudioSource _gameplayAudio;
+
+    public override void OnCreate()
+    {
+        base.OnCreate();
+        _gameplayAudio = GetComponent<AudioSource>();
+    }
 
     public void AddFoodAnimated(int amount)
     {
@@ -47,6 +54,9 @@ public class GameplayUIScreen : UIScreen
         Game.InputActions.Gameplay.Pause.performed += OnPauseAction;
         Game.InputActions.Gameplay.Enable();
         Cursor.visible = false;
+        _gameplayAudio.volume = 0f;
+        _gameplayAudio.Play();
+        _gameplayAudio.DOFade(1f, 1f);
 
         StartCoroutine(GameplayCoroutine());
     }
@@ -61,6 +71,7 @@ public class GameplayUIScreen : UIScreen
         _pauseMenu.OnElementHideStartedEvent -= OnPauseMenuHide;
         Game.InputActions.Gameplay.Disable();
         Cursor.visible = true;
+        _gameplayAudio.Pause();
     }
 
     private void Update()

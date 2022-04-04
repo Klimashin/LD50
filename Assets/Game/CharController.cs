@@ -119,7 +119,7 @@ public class CharController : MonoBehaviour
 
         if (direction != Vector2.zero)
         {
-            var distance = direction * (Speed * Time.deltaTime);
+            var distance = direction.normalized * (Speed * Time.deltaTime);
             _distanceTraveled += distance.magnitude;
             transform.Translate(distance);
             RendererTransform.rotation = Quaternion.LookRotation(Vector3.forward, direction);

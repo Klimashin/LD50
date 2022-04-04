@@ -106,22 +106,40 @@ public class CampScreen : UIScreen
         switch (characterName)
         {
             case "Dad":
-                _dadImage.DOFade(0f, DeathAnimationFadeDuration);
+            {
+                var images = _dadImage.GetComponentsInChildren<Image>();
+                foreach (var image in images)
+                {
+                    image.DOFade(0f, DeathAnimationFadeDuration);
+                }
                 yield return new WaitForSeconds(DeathAnimationFadeDuration);
                 _dadImage.enabled = false;
                 break;
+            }
 
             case "Mom":
-                _momImage.DOFade(0f, DeathAnimationFadeDuration);
+            {
+                var images = _momImage.GetComponentsInChildren<Image>();
+                foreach (var image in images)
+                {
+                    image.DOFade(0f, DeathAnimationFadeDuration);
+                }
                 yield return new WaitForSeconds(DeathAnimationFadeDuration);
                 _momImage.enabled = false;
                 break;
+            }
 
             case "Kid":
-                _kidImage.DOFade(0f, DeathAnimationFadeDuration);
+            {
+                var images = _kidImage.GetComponentsInChildren<Image>();
+                foreach (var image in images)
+                {
+                    image.DOFade(0f, DeathAnimationFadeDuration);
+                }
                 yield return new WaitForSeconds(DeathAnimationFadeDuration);
                 _kidImage.enabled = false;
                 break;
+            }
 
             default:
                 break;

@@ -11,6 +11,7 @@ public class MainMenuScreen : UIScreen
 
     private void OnEnable()
     {
+        Time.timeScale = 1f;
         _startGameButton.onClick.AddListener(OnStartButtonClick);
         _settingsButton.onClick.AddListener(OnSettingsButtonClick);
         _quitButton.onClick.AddListener(OnQuitButtonClick);

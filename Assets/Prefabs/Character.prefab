@@ -5046,6 +5046,16 @@ MonoBehaviour:
   CharacterAnimator: {fileID: 1178073315605471457}
   FootstepDistance: 0.5
   FootstepGap: 0.2
+  SoundSystem: {fileID: 11400000, guid: 37f59fd04fd7be049ae539f1127d5871, type: 2}
+  StepSounds:
+  - {fileID: 8300000, guid: e0d86ced12122ce45af4e5bf101d56db, type: 3}
+  - {fileID: 8300000, guid: 82e508890eb1a4c4389b5853f8aef3e9, type: 3}
+  - {fileID: 8300000, guid: a20771e35289c0a45957a7ccf671338c, type: 3}
+  - {fileID: 8300000, guid: 639a12a448300db429dfd94f477cd783, type: 3}
+  - {fileID: 8300000, guid: f28c883c86f056a42b03b12fa20337ab, type: 3}
+  - {fileID: 8300000, guid: 7ad8b15f88dbd8e428d05e7866a64eb1, type: 3}
+  - {fileID: 8300000, guid: 9c01f80b3e360b64685e75b860e4e937, type: 3}
+  - {fileID: 8300000, guid: df671e8a2fca7084c9a336a21fb4906d, type: 3}
   InteractionCollider: {fileID: 2684443011686990290}
   InteractionColliderFilter:
     useTriggers: 0

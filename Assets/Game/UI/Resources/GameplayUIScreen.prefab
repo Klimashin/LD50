@@ -194,7 +194,7 @@ MonoBehaviour:
   _foodText: {fileID: 7685404367279132853}
   _progressBar: {fileID: 3494224894742134018}
   _foodFlyingIconPrefab: {fileID: 4303284924780245922, guid: e9ed5f44a08f78642bd594d772638cb0, type: 3}
-  _gameplayTime: 5
+  _gameplayTime: 65
 --- !u!82 &3624100604732673032
 AudioSource:
   m_ObjectHideFlags: 0

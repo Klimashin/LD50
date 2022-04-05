@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Random = UnityEngine.Random;
 
 public class CharController : MonoBehaviour
 {
@@ -11,6 +12,8 @@ public class CharController : MonoBehaviour
     public Animator CharacterAnimator;
     public float FootstepDistance = 1f;
     public float FootstepGap = 0.25f;
+    public SoundSystem SoundSystem;
+    public AudioClip[] StepSounds;
     
     public Collider2D InteractionCollider;
     public ContactFilter2D InteractionColliderFilter;
@@ -131,6 +134,7 @@ public class CharController : MonoBehaviour
     }
 
     private int _stepsDir = 1;
+    private int _stepSoundIndex;
     private void Footstep()
     {
         if (_distanceTraveled >= FootstepDistance)
@@ -143,6 +147,12 @@ public class CharController : MonoBehaviour
                 position = pos, rotation = -RendererTransform.rotation.eulerAngles.z
             };
             FootstepParticles.Emit(ep, 1);
+            SoundSystem.PlayOneShot(StepSounds[_stepSoundIndex], 0.2f);
+            _stepSoundIndex++;
+            if (_stepSoundIndex >= StepSounds.Length)
+            {
+                _stepSoundIndex = 0;
+            }
         }
     }
 

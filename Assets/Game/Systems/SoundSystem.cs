@@ -22,7 +22,7 @@ public class SoundSystem : ScriptableObject
     }
 
     private AudioSource _oneShotAudio;
-    public void PlayOneShot(AudioClip clip)
+    public void PlayOneShot(AudioClip clip, float volScale = 1f)
     {
         if (_oneShotAudio == null)
         {
@@ -31,6 +31,6 @@ public class SoundSystem : ScriptableObject
             _oneShotAudio.outputAudioMixerGroup = _audioMixer.FindMatchingGroups("Sfx")[0];
         }
         
-        _oneShotAudio.PlayOneShot(clip);
+        _oneShotAudio.PlayOneShot(clip, volScale);
     }
 }

@@ -56,7 +56,7 @@ public class CampScreen : UIScreen
 
     protected override void OnPostShow()
     {
-        base.OnPreHide();
+        base.OnPostShow();
         
         _campAudio.volume = 0f;
         _campAudio.time = _audioTimeCached;

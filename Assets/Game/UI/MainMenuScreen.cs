@@ -8,6 +8,29 @@ public class MainMenuScreen : UIScreen
     [SerializeField] private Button _startGameButton;
     [SerializeField] private Button _settingsButton;
     [SerializeField] private Button _quitButton;
+    [SerializeField] private FireShadow _fireShadow;
+
+    protected override void OnPostShow()
+    {
+        base.OnPostShow();
+        
+        _fireShadow.enabled = true;
+        SetMenuButtonsActive(true);
+    }
+
+    protected override void OnPreShow()
+    {
+        base.OnPreShow();
+
+        SetMenuButtonsActive(false);
+    }
+
+    private void SetMenuButtonsActive(bool buttonsActive)
+    {
+        _startGameButton.gameObject.SetActive(buttonsActive);
+        _settingsButton.gameObject.SetActive(buttonsActive);
+        _quitButton.gameObject.SetActive(buttonsActive);
+    }
 
     private void OnEnable()
     {

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 
 
 public class UIController : MonoBehaviour 
@@ -139,7 +140,17 @@ public class UIController : MonoBehaviour
 		}
 
 		Resources.UnloadUnusedAssets();
+
+		SetupOverlayCamera();
+		
 		OnUIBuiltEvent?.Invoke();
+	}
+
+	private void SetupOverlayCamera()
+	{
+		var mainCamera = Camera.main;
+		var cameraData = mainCamera.GetUniversalAdditionalCameraData();
+		cameraData.cameraStack.Add(_uiCamera);
 	}
 
 	private void CreateCachedPopup(UIPopup popupPref) 

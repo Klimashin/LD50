@@ -100,7 +100,7 @@ public class GameplayUIScreen : UIScreen
     private void OnPauseAction(InputAction.CallbackContext obj)
     {
         var pauseMenu = UIController.GetUIElement<PauseMenuPopup>();
-        if (pauseMenu.isActive)
+        if (pauseMenu.IsActive)
         {
             pauseMenu.Hide();
         }

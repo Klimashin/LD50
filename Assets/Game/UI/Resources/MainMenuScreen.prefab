@@ -28,6 +28,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8685486546371581662}
   m_RootOrder: 0
@@ -163,6 +164,7 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3369221296543899745}
   m_RootOrder: 2
@@ -227,8 +229,6 @@ MonoBehaviour:
   - {fileID: 21300000, guid: ffed37a5fbc1438478f07ca02d18b277, type: 3}
   - {fileID: 21300000, guid: 34a581940e19d5240a627a8c546811db, type: 3}
   SwitchTimeout: 0.1
-  ShadowImage: {fileID: 5674396188687195351}
-  ShadowColor: {r: 0, g: 0, b: 0, a: 0.11764706}
 --- !u!1 &2287535827378950665
 GameObject:
   m_ObjectHideFlags: 0
@@ -240,6 +240,7 @@ GameObject:
   - component: {fileID: 3718410344515460867}
   - component: {fileID: 648551083359203445}
   - component: {fileID: 5674396188687195351}
+  - component: {fileID: 3049728831758189154}
   m_Layer: 5
   m_Name: FlameShadow
   m_TagString: Untagged
@@ -257,6 +258,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3369221296543899745}
   m_RootOrder: 1
@@ -304,6 +306,20 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &3049728831758189154
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2287535827378950665}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69743fd9aa5597f47a1506abe3d06f1f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShadowImage: {fileID: 5674396188687195351}
+  ShadowColor: {r: 0, g: 0, b: 0, a: 0.18431373}
 --- !u!1 &2668757783647043865
 GameObject:
   m_ObjectHideFlags: 0
@@ -333,6 +349,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6894698412832126217}
   m_Father: {fileID: 3369221296543899745}
@@ -436,7 +453,6 @@ GameObject:
   - component: {fileID: 7617922158572757047}
   - component: {fileID: 807244013593136654}
   - component: {fileID: 653952490110123658}
-  - component: {fileID: 1373510527377307180}
   m_Layer: 5
   m_Name: Background
   m_TagString: Untagged
@@ -454,6 +470,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3369221296543899745}
   m_RootOrder: 0
@@ -501,25 +518,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!95 &1373510527377307180
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2920336310992381995}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: a7674982b16c0bd44a613a28ce1eeb14, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &3619973607868595581
 GameObject:
   m_ObjectHideFlags: 0
@@ -531,6 +529,7 @@ GameObject:
   - component: {fileID: 3369221296543899745}
   - component: {fileID: 2741046850260414507}
   - component: {fileID: 4146769064913225986}
+  - component: {fileID: 1188917282550713140}
   m_Layer: 5
   m_Name: MainMenuScreen
   m_TagString: Untagged
@@ -548,6 +547,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7617922158572757047}
   - {fileID: 3718410344515460867}
@@ -575,13 +575,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f0f93bf74c9c584fbc5dd99afde9d12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _animator: {fileID: 0}
+  _fadeInOutDuration: 2
   _layer: 0
   _showByDefault: 1
   _gameplaySceneName: Gameplay
   _startGameButton: {fileID: 8211913278915355561}
   _settingsButton: {fileID: 8757483574151698942}
   _quitButton: {fileID: 262762286841503000}
+  _fireShadow: {fileID: 3049728831758189154}
 --- !u!82 &4146769064913225986
 AudioSource:
   m_ObjectHideFlags: 0
@@ -678,6 +679,18 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!225 &1188917282550713140
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3619973607868595581}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &4828289478602940471
 GameObject:
   m_ObjectHideFlags: 0
@@ -707,6 +720,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7263276519457360844}
   m_Father: {fileID: 3369221296543899745}
@@ -828,6 +842,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1074950536940756303}
   m_Father: {fileID: 3369221296543899745}
@@ -948,6 +963,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8017087285829309273}
   m_RootOrder: 0
@@ -1082,6 +1098,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1984927489639085811}
   m_RootOrder: 0

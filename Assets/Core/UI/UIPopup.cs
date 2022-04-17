@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-
 public abstract class UIPopup : UIElement, IUIPopup 
 {
     [SerializeField] protected UILayerType _layer;
@@ -12,59 +11,16 @@ public abstract class UIPopup : UIElement, IUIPopup
     public bool isPreCached => _isPreCached;
     public Button[] buttonsClose => _buttonsClose;
 
-    private Canvas canvas { get; set; }
-
-    private void Awake() 
-    {
-        if (isPreCached)
-        {
-            InitPreCachedPopup();
-        }
-    
-        OnAwake();
-    }
-    
-    private void InitPreCachedPopup()
-    {
-        InitCanvas();
-        InitRaycaster();
-    }
-    
-    private void InitCanvas()
-    {
-        canvas = gameObject.GetComponent<Canvas>();
-        if (!canvas)
-            canvas = gameObject.AddComponent<Canvas>();
-    }
-    
-    private void InitRaycaster()
-    {
-        var raycaster = gameObject.GetComponent<GraphicRaycaster>();
-        if (!raycaster)
-            gameObject.AddComponent<GraphicRaycaster>();
-    }
-
-    protected virtual void OnAwake() { }
-
     public sealed override void Show() 
     {
-        if (isActive)
-        {
-            return;
-        }
+        base.Show();
 
-        OnPreShow();
         SubscribeOnCloseEvents();
 
-        if (isPreCached) {
+        if (isPreCached) 
+        {
             transform.SetAsLastSibling();
-            canvas.enabled = true;
         }
-
-        isActive = true;
-        gameObject.SetActive(true);
-        OnPostShow();
-        NotifyAboutShown();
     }
 
     private void SubscribeOnCloseEvents() 
@@ -77,7 +33,7 @@ public abstract class UIPopup : UIElement, IUIPopup
 
     public sealed override void HideInstantly() 
     {
-        if (!isActive)
+        if (!IsActive)
         {
             return;
         }
@@ -86,7 +42,6 @@ public abstract class UIPopup : UIElement, IUIPopup
 
         if (isPreCached)
         {
-            canvas.enabled = false;
             gameObject.SetActive(false);
         }
         else
@@ -94,7 +49,7 @@ public abstract class UIPopup : UIElement, IUIPopup
             Destroy(gameObject);
         }
 
-        isActive = false;
+        IsActive = false;
         OnPostHide();
     }
     

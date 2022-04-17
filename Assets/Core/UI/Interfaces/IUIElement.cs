@@ -8,7 +8,7 @@ public interface IUIElement
 	event Action<IUIElement> OnElementShownEvent;
 	event Action<IUIElement> OnElementDestroyedEvent;
 
-	bool isActive { get; }
+	bool IsActive { get; }
 	string name { get; }
 	GameObject gameObject { get; }
 

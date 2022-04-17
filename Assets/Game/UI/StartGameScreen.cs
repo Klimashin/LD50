@@ -20,13 +20,11 @@ public class StartGameScreen : UIScreen
         _generator = FindObjectOfType<LevelGenerator>();
 
         StartCoroutine(GameplayInitializer());
-        
-        
     }
 
     private void OnStartGameButtonClick()
     {
-        uiController.ShowUIElement<GameplayUIScreen>();
+        UIController.ShowUIElement<GameplayUIScreen>();
         Hide();
     }
 

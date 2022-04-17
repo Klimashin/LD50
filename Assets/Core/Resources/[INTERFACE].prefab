@@ -30,6 +30,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 0}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 26625118319148422}
   - {fileID: 3619469806696873281}
@@ -61,7 +62,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
-  m_SortingLayerID: -894766857
+  m_SortingLayerID: -802907357
   m_SortingOrder: 0
   m_TargetDisplay: 0
 --- !u!114 &26625116460192422
@@ -140,6 +141,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 26625117932972383}
   m_RootOrder: 0
@@ -249,6 +251,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 26625116460192424}
   m_RootOrder: 2
@@ -276,7 +279,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
-  m_SortingLayerID: -894766857
+  m_SortingLayerID: -802907357
   m_SortingOrder: 1000
   m_TargetDisplay: 0
 --- !u!114 &1493005374
@@ -308,7 +311,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9c221cdad6f6594680b26d818683154, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _animator: {fileID: 0}
   _layer: 2
 --- !u!1 &26625117107285679
 GameObject:
@@ -338,6 +340,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 26625116460192424}
   m_RootOrder: 3
@@ -365,7 +368,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
-  m_SortingLayerID: -894766857
+  m_SortingLayerID: -802907357
   m_SortingOrder: 1500
   m_TargetDisplay: 0
 --- !u!114 &6904644900890461922
@@ -380,7 +383,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9c221cdad6f6594680b26d818683154, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _animator: {fileID: 0}
   _layer: 3
 --- !u!1 &26625117932972382
 GameObject:
@@ -409,6 +411,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 26625116579301567}
   - {fileID: 26625116460192424}
@@ -463,6 +466,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 26625116460192424}
   m_RootOrder: 0
@@ -490,7 +494,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
-  m_SortingLayerID: -894766857
+  m_SortingLayerID: -802907357
   m_SortingOrder: 0
   m_TargetDisplay: 0
 --- !u!114 &729222008
@@ -522,7 +526,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9c221cdad6f6594680b26d818683154, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _animator: {fileID: 0}
   _layer: 0
 --- !u!1 &26625118417571267
 GameObject:
@@ -552,6 +555,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 26625117932972383}
   m_RootOrder: 2
@@ -627,6 +631,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 26625116460192424}
   m_RootOrder: 1
@@ -654,7 +659,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
-  m_SortingLayerID: -894766857
+  m_SortingLayerID: -802907357
   m_SortingOrder: 500
   m_TargetDisplay: 0
 --- !u!114 &7506349339169583541
@@ -669,5 +674,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9c221cdad6f6594680b26d818683154, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _animator: {fileID: 0}
   _layer: 1

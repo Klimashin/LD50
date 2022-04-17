@@ -1,10 +1,10 @@
 using System;
 using UnityEngine;
-using UnityEngine.Experimental.Rendering.Universal;
+
 
 public class ShadowcasterCuller : MonoBehaviour
 {
-    private ShadowCaster2D _shadowcaster;
+    private UnityEngine.Rendering.Universal.ShadowCaster2D _shadowcaster;
 
     private int _count = 0;
 
@@ -37,13 +37,13 @@ public class ShadowcasterCuller : MonoBehaviour
 
     private void Awake()
     {
-        if (TryGetComponent<ShadowCaster2D>(out var shadowcaster))
+        if (TryGetComponent<UnityEngine.Rendering.Universal.ShadowCaster2D>(out var shadowcaster))
         {
             Init(shadowcaster);
         }
     }
 
-    public void Init(ShadowCaster2D shadowcaster)
+    public void Init(UnityEngine.Rendering.Universal.ShadowCaster2D shadowcaster)
     {
         _shadowcaster = shadowcaster;
         _isShadowcasterActive = _shadowcaster.castsShadows;

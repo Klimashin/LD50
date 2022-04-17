@@ -9,7 +9,7 @@ public interface ISceneManager
     event SceneManagerHandler OnSceneLoadStartedEvent;
     event SceneManagerHandler OnSceneLoadCompletedEvent;
 
-    IScene SceneActual { get; }
+    IScene CurrentScene { get; }
     Dictionary<string, SceneConfig> ScenesConfigMap { get; }
 
     Coroutine LoadScene(string sceneName, UnityAction<SceneConfig> sceneLoadedCallback = null);

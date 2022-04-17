@@ -6,30 +6,29 @@ using UnityEngine.Events;
 
 public class SceneManager : ISceneManager
 {
-    private const string CONFIG_FOLDER = "SceneConfigs";
-
     public event SceneManagerHandler OnSceneLoadStartedEvent;
     public event SceneManagerHandler OnSceneLoadCompletedEvent;
 
     public Dictionary<string, SceneConfig> ScenesConfigMap { get; }
-    public IScene SceneActual { get; private set; }
-    public bool isLoading { get; private set; }
+    public IScene CurrentScene { get; private set; }
+    public bool IsLoading { get; private set; }
 
     public SceneManager() 
     {
         ScenesConfigMap = new Dictionary<string, SceneConfig>();
         InitializeSceneConfigs();
     }
-
+    
+    private const string CONFIG_FOLDER = "SceneConfigs";
     private void InitializeSceneConfigs() 
     {
         var allSceneConfigs = Resources.LoadAll<SceneConfig>(CONFIG_FOLDER);
-        foreach (var sceneConfig in allSceneConfigs) 
-            ScenesConfigMap[sceneConfig.sceneName] = sceneConfig;
+        foreach (var sceneConfig in allSceneConfigs)
+        {
+            ScenesConfigMap[sceneConfig.SceneName] = sceneConfig;
+        }
     }
 
-    
-    
     public Coroutine LoadScene(string sceneName, UnityAction<SceneConfig> sceneLoadedCallback = null) 
     {
         return LoadAndInitializeScene(sceneName, sceneLoadedCallback, true);
@@ -41,8 +40,7 @@ public class SceneManager : ISceneManager
         return LoadAndInitializeScene(sceneName, sceneLoadedCallback, false);
     }
 
-    
-    protected Coroutine LoadAndInitializeScene(string sceneName, UnityAction<SceneConfig> sceneLoadedCallback, bool loadNewScene) 
+    private Coroutine LoadAndInitializeScene(string sceneName, UnityAction<SceneConfig> sceneLoadedCallback, bool loadNewScene) 
     {
         ScenesConfigMap.TryGetValue(sceneName, out var config);
 
@@ -54,12 +52,11 @@ public class SceneManager : ISceneManager
         return Coroutines.StartRoutine(LoadSceneRoutine(config, sceneLoadedCallback, loadNewScene));
     }
 
-
-    protected virtual IEnumerator LoadSceneRoutine(SceneConfig config, UnityAction<SceneConfig> sceneLoadedCallback, bool loadNewScene = true) 
+    private IEnumerator LoadSceneRoutine(SceneConfig config, UnityAction<SceneConfig> sceneLoadedCallback, bool loadNewScene = true) 
     {
         LoadingScreen.Instance.Show(this);
             
-        isLoading = true;
+        IsLoading = true;
         OnSceneLoadStartedEvent?.Invoke(config);
 
         if (loadNewScene)
@@ -67,19 +64,19 @@ public class SceneManager : ISceneManager
             yield return Coroutines.StartRoutine(LoadSceneAsyncRoutine(config));
         }
 
-        yield return Coroutines.StartRoutine(InitializeSceneRoutine(config, sceneLoadedCallback));
+        yield return Coroutines.StartRoutine(InitializeSceneRoutine(config));
 
         yield return new WaitForSecondsRealtime(0.1f);
-        isLoading = false;
+        IsLoading = false;
         OnSceneLoadCompletedEvent?.Invoke(config);
         sceneLoadedCallback?.Invoke(config);
         
         LoadingScreen.Instance.Hide(this);
     }
 
-    protected IEnumerator LoadSceneAsyncRoutine(SceneConfig config) 
+    private IEnumerator LoadSceneAsyncRoutine(SceneConfig config) 
     {
-        var asyncOperation = UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(config.sceneName);
+        var asyncOperation = UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(config.SceneName);
         asyncOperation.allowSceneActivation = false;
 
         var progressDivider = 0.9f;
@@ -94,21 +91,21 @@ public class SceneManager : ISceneManager
         asyncOperation.allowSceneActivation = true;
     }
 
-    protected virtual IEnumerator InitializeSceneRoutine(SceneConfig config, UnityAction<SceneConfig> sceneLoadedCallback) 
+    private IEnumerator InitializeSceneRoutine(SceneConfig config) 
     {
 
-        SceneActual = new Scene(config);
+        CurrentScene = new Scene(config);
         yield return null;
 
-        SceneActual.BuildUI();
+        CurrentScene.BuildUI();
         yield return null;
 
-        SceneActual.SendMessageOnCreate();
+        CurrentScene.SendMessageOnCreate();
         yield return null;
         
-        yield return SceneActual.InitializeAsync();
+        yield return CurrentScene.InitializeAsync();
 
-        SceneActual.Start();
+        CurrentScene.Start();
     }
 
 }

@@ -113,12 +113,12 @@ public class CampScreen : UIScreen
         {
             _campSystem.CurrentDay++;
             Hide();
-            uiController.ShowUIElement<GameplayUIScreen>();
+            UIController.ShowUIElement<GameplayUIScreen>();
         }
         else
         {
             Hide();
-            uiController.ShowUIElement<EndGameScreen>();
+            UIController.ShowUIElement<EndGameScreen>();
         }
     }
 

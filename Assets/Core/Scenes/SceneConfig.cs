@@ -23,20 +23,19 @@ public sealed class SceneConfig : ScriptableObject {
     [Header("======= STORAGE SETTING S======="), Space(20)]
     [SerializeField] private bool _saveDataForThisScene;
     [SerializeField] private string _saveName;
-
     
-    
-    public string sceneName => _sceneName;
-    public string[] repositoriesReferences => _repositoryReferences;
-    public string[] interactorsReferences => _interactorsReferences;
-    public IUIElementOnLayer[] uiPrefabs => GetUIPrefabs();
+    public string SceneName => _sceneName;
+    public string[] RepositoriesReferences => _repositoryReferences;
+    public string[] InteractorsReferences => _interactorsReferences;
 
-    public bool saveDataForThisScene => _saveDataForThisScene;
-    public string saveName => _saveName;
+    public bool SaveDataForThisScene => _saveDataForThisScene;
+    public string SaveName => _saveName;
 
-    public IUIElementOnLayer[] GetUIPrefabs() {
+    public IUIElementOnLayer[] GetUIPrefabs()
+    {
         var uiPrefabs = new List<IUIElementOnLayer>();
-        foreach (var goPrefab in _uiPrefabs) {
+        foreach (var goPrefab in _uiPrefabs) 
+        {
             var uiPrefab = goPrefab.GetComponent<IUIElementOnLayer>();
             uiPrefabs.Add(uiPrefab);
         }
@@ -44,8 +43,9 @@ public sealed class SceneConfig : ScriptableObject {
         return uiPrefabs.ToArray();
     }
     
-    public IUIElementOnLayer GetPrefab(Type type) {
-        var allPrefab = uiPrefabs;
+    public IUIElementOnLayer GetPrefab(Type type)
+    {
+        var allPrefab = GetUIPrefabs();
         return allPrefab.First(pref => pref.GetType() == type);
     }
 

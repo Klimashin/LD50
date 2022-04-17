@@ -11,7 +11,6 @@ public class UIController : MonoBehaviour
 	[SerializeField] private Camera _uiCamera;
 	[SerializeField] private UILayer[] _layers;
 
-
 	public Camera UICamera => _uiCamera;
 	public bool IsUIBuilt { get; private set; }
 	public bool IsLoggingEnabled { get; set; }
@@ -30,43 +29,28 @@ public class UIController : MonoBehaviour
 
 		DontDestroyOnLoad(gameObject);
 	}
-	#region MESSAGES
 
-	/// <summary>
-	/// Called when all repositories and interactors are created.
-	/// </summary>
 	public void SendMessageOnCreate()
 	{
 		var allCreatedElements = _createdUIElementsMap.Values.ToArray();
 		foreach (var element in allCreatedElements)
 			element.OnCreate();
 	}
-
-	/// <summary>
-	/// Called when all repositories and interactors are initialized.
-	/// </summary>
+	
 	public void SendMessageOnInitialize() 
 	{
 		var allCreatedElements = _createdUIElementsMap.Values.ToArray();
 		foreach (var element in allCreatedElements)
 			element.OnInitialize();
 	}
-
-	/// <summary>
-	/// Called when all repositories and interactors are started.
-	/// </summary>
+	
 	public void SendMessageOnStart() 
 	{
 		var allCreatedElements = _createdUIElementsMap.Values.ToArray();
 		foreach (var element in allCreatedElements)
 			element.OnStart();
 	}
-
-	#endregion
-
-
-
-	#region SHOW
+	
 
 	public T ShowUIElement<T>() where T : UIElement, IUIElementOnLayer 
 	{
@@ -87,22 +71,6 @@ public class UIController : MonoBehaviour
 
 		var prefab = _sceneConfig.GetPrefab(type);
 		return CreateAndShowElement<T>(prefab);
-	}
-
-	public void HideUIElement<T>() where T : UIElement, IUIElementOnLayer
-	{
-		var type = typeof(T);
-		if (_createdUIElementsMap.TryGetValue(type, out var foundElement))
-		{
-			foundElement.Hide();
-			return;
-		}
-
-		_cachedPopupsMap.TryGetValue(type, out var cachedPopup);
-		if (cachedPopup != null) 
-		{
-			cachedPopup.Hide();
-		}
 	}
 
 	private T CreateAndShowElement<T>(IUIElementOnLayer prefab) where T : UIElement, IUIElementOnLayer 
@@ -130,12 +98,6 @@ public class UIController : MonoBehaviour
 		uiElement.OnElementHiddenCompletelyEvent -= OnElementHiddenCompletely;
 		_createdUIElementsMap.Remove(type);
 	}
-
-	#endregion
-
-
-
-	#region BUILD
 
 	public void BuildUI(SceneConfig sceneConfig) 
 	{
@@ -193,16 +155,6 @@ public class UIController : MonoBehaviour
 		createdCachedPopup.HideInstantly();
 	}
 
-	private void CreateAndShowScreen(UIScreen uiScreenPref) 
-	{
-		var container = GetContainer(uiScreenPref.layer);
-		var createdUIScreen = Instantiate(uiScreenPref, container);
-		createdUIScreen.name = uiScreenPref.name;
-		var type = createdUIScreen.GetType();
-		_createdUIElementsMap[type] = createdUIScreen;
-		createdUIScreen.Show();
-	}
-	
 	private void CreateHiddenScreen(UIScreen uiScreenPref) 
 	{
 		var container = GetContainer(uiScreenPref.layer);
@@ -222,15 +174,6 @@ public class UIController : MonoBehaviour
 	{
 		var type = uiElementPref.GetType();
 		_uiDynamicPrefabTypes.Add(type);
-	}
-
-	#endregion
-
-	
-	
-	public IUIElementOnLayer[] GetAllCreatedUIElements() 
-	{
-		return _createdUIElementsMap.Values.ToArray();
 	}
 
 	public T GetUIElement<T>() where T : UIElement 

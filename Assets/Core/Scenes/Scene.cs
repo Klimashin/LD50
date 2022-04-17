@@ -15,8 +15,8 @@ public sealed class Scene : IScene
     public Scene(SceneConfig config) 
     {
         sceneConfig = config;
-        repositoriesBase = new ComponentsBase<IRepository>(config.repositoriesReferences);
-        interactorsBase = new ComponentsBase<IInteractor>(config.interactorsReferences);
+        repositoriesBase = new ComponentsBase<IRepository>(config.RepositoriesReferences);
+        interactorsBase = new ComponentsBase<IInteractor>(config.InteractorsReferences);
     }
 
     public void BuildUI()
@@ -42,8 +42,8 @@ public sealed class Scene : IScene
     private IEnumerator InitializeAsyncRoutine() 
     {
         // TODO: Load storage here if needed.
-        if (sceneConfig.saveDataForThisScene) {
-            fileStorage = new FileStorage(sceneConfig.saveName);
+        if (sceneConfig.SaveDataForThisScene) {
+            fileStorage = new FileStorage(sceneConfig.SaveName);
             fileStorage.Load();
         }
 
@@ -57,9 +57,6 @@ public sealed class Scene : IScene
 
     #endregion
 
-
-    #region START
-
     public void Start() 
     {
         repositoriesBase.SendMessageOnStart();
@@ -71,9 +68,6 @@ public sealed class Scene : IScene
     {
         fileStorage?.Save();
     }
-
-    #endregion
-
 
     public T GetRepository<T>() where T : IRepository 
     {

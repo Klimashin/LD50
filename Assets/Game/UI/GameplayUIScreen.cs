@@ -46,7 +46,7 @@ public class GameplayUIScreen : UIScreen
     protected override void OnPostShow()
     {
         base.OnPostShow();
-        _pauseMenu = uiController.GetUIElement<PauseMenuPopup>();
+        _pauseMenu = UIController.GetUIElement<PauseMenuPopup>();
         _charController = GameObject.FindGameObjectWithTag("Player").GetComponent<CharController>();
 
         _pauseMenu.OnElementShownEvent += OnPauseMenuShown;
@@ -99,7 +99,7 @@ public class GameplayUIScreen : UIScreen
 
     private void OnPauseAction(InputAction.CallbackContext obj)
     {
-        var pauseMenu = uiController.GetUIElement<PauseMenuPopup>();
+        var pauseMenu = UIController.GetUIElement<PauseMenuPopup>();
         if (pauseMenu.isActive)
         {
             pauseMenu.Hide();
@@ -112,7 +112,7 @@ public class GameplayUIScreen : UIScreen
 
     private void OnPauseButtonClick()
     {
-        uiController.GetUIElement<PauseMenuPopup>().Show();
+        UIController.GetUIElement<PauseMenuPopup>().Show();
     }
     
     private IEnumerator GameplayCoroutine()
@@ -132,6 +132,6 @@ public class GameplayUIScreen : UIScreen
         _charController.Disable();
 
         Hide();
-        uiController.GetUIElement<CampScreen>().Show();
+        UIController.GetUIElement<CampScreen>().Show();
     }
 }

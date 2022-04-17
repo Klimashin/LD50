@@ -50,36 +50,36 @@ public abstract class Game
 
     public static T GetInteractor<T>() where T : IInteractor 
     {
-        return SceneManager.SceneActual.GetInteractor<T>();
+        return SceneManager.CurrentScene.GetInteractor<T>();
     }
 
     public static IEnumerable<T> GetInteractors<T>() where T : IInteractor 
     {
-        return SceneManager.SceneActual.GetInteractors<T>();
+        return SceneManager.CurrentScene.GetInteractors<T>();
     }
 
     public static T GetRepository<T>() where T : IRepository 
     {
-        return SceneManager.SceneActual.GetRepository<T>();
+        return SceneManager.CurrentScene.GetRepository<T>();
     }
     
     public static IEnumerable<T> GetRepositories<T>() where T : IRepository 
     {
-        return SceneManager.SceneActual.GetRepositories<T>();
+        return SceneManager.CurrentScene.GetRepositories<T>();
     }
 
     public static void SaveGame() 
     {
-        SceneManager.SceneActual.fileStorage.Save();
+        SceneManager.CurrentScene.fileStorage.Save();
     }
 
     public static void SaveGameAsync(Action callback) 
     {
-        SceneManager.SceneActual.fileStorage.SaveAsync(callback);
+        SceneManager.CurrentScene.fileStorage.SaveAsync(callback);
     }
 
     public static IEnumerator SaveWithRoutine(Action callback) 
     {
-        yield return SceneManager.SceneActual.fileStorage.SaveWithRoutine();
+        yield return SceneManager.CurrentScene.fileStorage.SaveWithRoutine();
     }
 }

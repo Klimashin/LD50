@@ -31,7 +31,7 @@ public class MainMenuScreen : UIScreen
 
     private void OnSettingsButtonClick()
     {
-        uiController.ShowUIElement<SettingsPopup>();
+        UIController.ShowUIElement<SettingsPopup>();
     }
 
     private void OnQuitButtonClick()

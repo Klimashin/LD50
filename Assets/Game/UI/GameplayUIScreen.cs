@@ -49,8 +49,8 @@ public class GameplayUIScreen : UIScreen
         _pauseMenu = UIController.GetUIElement<PauseMenuPopup>();
         _charController = GameObject.FindGameObjectWithTag("Player").GetComponent<CharController>();
 
-        _pauseMenu.OnElementShownEvent += OnPauseMenuShown;
-        _pauseMenu.OnElementHideStartedEvent += OnPauseMenuHide;
+        _pauseMenu.OnElementStartShowEvent += OnPauseMenuShow;
+        _pauseMenu.OnElementHiddenCompletelyEvent += OnPauseMenuHide;
         _pauseButton.onClick.AddListener(OnPauseButtonClick);
         Game.InputActions.Gameplay.Pause.performed += OnPauseAction;
         Game.InputActions.Gameplay.Enable();
@@ -69,8 +69,8 @@ public class GameplayUIScreen : UIScreen
 
         _pauseButton.onClick.RemoveListener(OnPauseButtonClick);
         Game.InputActions.Gameplay.Pause.performed -= OnPauseAction;
-        _pauseMenu.OnElementShownEvent -= OnPauseMenuShown;
-        _pauseMenu.OnElementHideStartedEvent -= OnPauseMenuHide;
+        _pauseMenu.OnElementStartShowEvent -= OnPauseMenuShow;
+        _pauseMenu.OnElementHiddenCompletelyEvent -= OnPauseMenuHide;
         Game.InputActions.Gameplay.Disable();
         Cursor.visible = true;
         _audioTimeCached = _gameplayAudio.time;
@@ -82,7 +82,7 @@ public class GameplayUIScreen : UIScreen
         _foodText.text = $"X {_campSystem.CurrentFood.ToString()}";
     }
 
-    private void OnPauseMenuShown(IUIElement menu)
+    private void OnPauseMenuShow(IUIElement menu)
     {
         Time.timeScale = 0;
         _charController.Disable();
@@ -94,7 +94,6 @@ public class GameplayUIScreen : UIScreen
         Time.timeScale = 1;
         _charController.Enable();
         Cursor.visible = false;
-        Debug.Log("HERE");
     }
 
     private void OnPauseAction(InputAction.CallbackContext obj)

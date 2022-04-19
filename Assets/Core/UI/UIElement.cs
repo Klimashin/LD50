@@ -8,6 +8,7 @@ public abstract class UIElement : MonoBehaviour, IUIElement
 	
 	public event Action<IUIElement> OnElementHideStartedEvent;
 	public event Action<IUIElement> OnElementHiddenCompletelyEvent;
+	public event Action<IUIElement> OnElementStartShowEvent;
 	public event Action<IUIElement> OnElementShownEvent;
 	public event Action<IUIElement> OnElementDestroyedEvent;
 
@@ -19,6 +20,8 @@ public abstract class UIElement : MonoBehaviour, IUIElement
 		OnPreShow();
 		gameObject.SetActive(true);
 		IsActive = true;
+		
+		OnElementStartShowEvent?.Invoke(this);
 
 		if (_fadeInOutDuration > 0f && TryGetComponent<CanvasGroup>(out var canvasGroup))
 		{
@@ -26,6 +29,7 @@ public abstract class UIElement : MonoBehaviour, IUIElement
 			canvasGroup
 				.DOFade(1f, _fadeInOutDuration)
 				.SetEase(Ease.InQuad)
+				.SetUpdate(true)
 				.OnComplete(OnPostShow);
 		}
 		else
@@ -57,6 +61,7 @@ public abstract class UIElement : MonoBehaviour, IUIElement
 			canvasGroup
 				.DOFade(0f, _fadeInOutDuration)
 				.SetEase(Ease.OutQuad)
+				.SetUpdate(true)
 				.OnComplete(HideInstantly);
 		}
 		else

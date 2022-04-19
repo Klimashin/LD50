@@ -31,7 +31,7 @@ public abstract class UIPopup : UIElement, IUIPopup
         }
     }
 
-    public sealed override void HideInstantly() 
+    public override void HideInstantly() 
     {
         if (!IsActive)
         {
@@ -49,8 +49,7 @@ public abstract class UIPopup : UIElement, IUIPopup
             Destroy(gameObject);
         }
 
-        IsActive = false;
-        OnPostHide();
+        base.HideInstantly();
     }
     
     private void UnsubscribeFromCloseEvents() 

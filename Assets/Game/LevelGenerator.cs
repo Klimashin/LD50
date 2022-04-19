@@ -2,55 +2,68 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LevelGenerator : MonoBehaviour
+public class LevelGenerator
 {
-    public float GenerationSize = 40f;
-    public int GenerationCount = 200;
-    public List<GameObject> GenerationPrefabs;
-    public LayerMask GenerationLayerMask;
+    private readonly LevelGeneratorSettings _settings;
+    
+    public LevelGenerator(LevelGeneratorSettings settings)
+    {
+        _settings = settings;
+    }
 
     public float WorldGenerationProgress { get; private set; }
 
-    public IEnumerator Generate()
+    public Coroutine Generate(int seed)
     {
+        return Coroutines.StartRoutine(GenerationRoutine(seed));
+    }
+
+    private IEnumerator GenerationRoutine(int seed)
+    {
+        Random.InitState(seed);
+        
         yield return null;
 
         var collidersToDestroy = new List<Collider2D>();
         
-        for(var i=0; i < GenerationCount; i++)
+        for(var i=0; i < _settings.GenerationCount; i++)
         {
-            var prefab = GenerationPrefabs[Random.Range(0, GenerationPrefabs.Count)];
-            var levelObject = Instantiate(prefab);
-            levelObject.transform.position = new Vector3(Random.Range(-1f, 1f) * GenerationSize, Random.Range(-1f, 1f) * GenerationSize, 0f);;
+            var prefab = _settings.GenerationPrefabs[Random.Range(0, _settings.GenerationPrefabs.Count)];
+            var levelObjectHandle = prefab.InstantiateAsync();
+            while (!levelObjectHandle.IsDone)
+            {
+                yield return null;
+            }
+
+            var levelObject = levelObjectHandle.Result;
+            levelObject.transform.position = new Vector3(Random.Range(-1f, 1f) * _settings.GenerationSize, Random.Range(-1f, 1f) * _settings.GenerationSize, 0f);;
             levelObject.transform.rotation = Quaternion.Euler(new Vector3(0f, 0f, Random.Range(0f, 360f)));
             
             yield return null;
 
             var obstaclesCastCollider = levelObject.GetComponent<Collider2D>();
             var result = new List<Collider2D>();
-            var filter = new ContactFilter2D { useLayerMask = true, layerMask = GenerationLayerMask };
+            var filter = new ContactFilter2D { useLayerMask = true, layerMask = _settings.GenerationLayerMask };
             var castResultsCount = obstaclesCastCollider.OverlapCollider(filter, result);
             if (castResultsCount > 0)
             {
-                Destroy(levelObject.gameObject);
+                Object.Destroy(levelObject.gameObject);
                 i--;
             }
             else
             {
                 collidersToDestroy.Add(obstaclesCastCollider);
-                WorldGenerationProgress = i / (float)GenerationCount;
+                WorldGenerationProgress = i / (float)_settings.GenerationCount;
             }
         }
         
         foreach (var col in collidersToDestroy)
         {
-            Destroy(col);
+            Object.Destroy(col);
         }
 
         WorldGenerationProgress = 1f;
-        
-        Destroy(GetComponent<Collider2D>());
-        
+
         yield return null;
     }
 }

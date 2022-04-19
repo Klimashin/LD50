@@ -315,6 +315,7 @@ SpriteRenderer:
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -365,6 +366,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 5, y: 5, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -2772,5 +2774,7 @@ PrefabInstance:
       propertyPath: m_InstanceId
       value: -316692
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6286104614505873621, guid: a4b9e375f8d357243953acb2b0c6b44a, type: 3}
+    - {fileID: 5849019785210754962, guid: a4b9e375f8d357243953acb2b0c6b44a, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: a4b9e375f8d357243953acb2b0c6b44a, type: 3}

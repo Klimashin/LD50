@@ -1,6 +1,7 @@
 
 using System.Collections;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 using UnityEngine.UI;
 
 public class StartGameScreen : UIScreen
@@ -16,8 +17,6 @@ public class StartGameScreen : UIScreen
         _campSystem.Reset();
         
         _startGameButton.onClick.AddListener(OnStartGameButtonClick);
-
-        _generator = FindObjectOfType<LevelGenerator>();
 
         StartCoroutine(GameplayInitializer());
     }
@@ -38,13 +37,22 @@ public class StartGameScreen : UIScreen
     {
         Time.timeScale = 1;
         
+        var generatorSettingsHandle =  Addressables.LoadAssetAsync<LevelGeneratorSettings>("Assets/GeneratorSettings.asset");
+        while (!generatorSettingsHandle.IsDone)
+        {
+            yield return null;
+        }
+
+        _generator = new LevelGenerator(generatorSettingsHandle.Result);
+        
         _startGameButton.interactable = false;
 
         yield return null;
         yield return null;
         yield return null;
-
-        yield return _generator.Generate();
+        
+        var seed = 12345;
+        yield return _generator.Generate(seed);
         
         GenerationProgressFill.transform.parent.gameObject.SetActive(false);
         _startGameButton.gameObject.SetActive(true);

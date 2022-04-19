@@ -1,0 +1,57 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Default Local Group
+  m_EditorClassIdentifier: 
+  m_GroupName: Default Local Group
+  m_Data:
+    m_SerializedData: []
+  m_GUID: a831194e50b933949ad152d77724fdd1
+  m_SerializeEntries:
+  - m_GUID: d2786c91aff1fae45b29d2be6b91450e
+    m_Address: Assets/Prefabs/GenerationPrefabs/Ruins_1.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 9287851823b979346912bb413bed78ca
+    m_Address: Assets/Prefabs/GenerationPrefabs/Ruins_2.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 8cb978edd3d706543aecaac973d58a28
+    m_Address: Assets/Prefabs/GenerationPrefabs/Ruins_3.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: ac62df912a178de43b8c0a65a81f68da
+    m_Address: Assets/Prefabs/GenerationPrefabs/Ruins_4.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 23a11724397c4f24a8f8cfc475e6eaca
+    m_Address: Assets/Prefabs/GenerationPrefabs/Ruins_5.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: e9551efc61bf9a94ab747777b8d33bae
+    m_Address: Assets/Prefabs/GenerationPrefabs/Objects1.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: b62570a1c754f234b8340d165582c968
+    m_Address: Assets/Prefabs/GenerationPrefabs/Objects2.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 59978f9de90e84949903eb8cdedba6f8
+    m_Address: Assets/GeneratorSettings.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: aaaf6d96adb43784aa7bbba0026ab5d9, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 39e2c0b1624641245aa11400a8579d9d, type: 2}
+    - {fileID: 11400000, guid: b107a92bed30f54458505bcf95415f73, type: 2}

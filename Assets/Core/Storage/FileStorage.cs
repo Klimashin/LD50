@@ -2,15 +2,19 @@
 using System.Collections;
 using System.IO;
 using System.Threading;
+using Sirenix.Serialization;
 using UnityEngine;
 
 
 public sealed class FileStorage : Storage
 {
-
-	public string filePath { get; }
+	public event Action OnStorageSaveStartedEvent;
+	public event Action OnStorageSaveCompleteEvent;
+	public event Action<GameData> OnStorageLoadedEvent;
 	
-	public FileStorage(string fileName) 
+	public string FilePath { get; }
+	
+	public FileStorage(string fileName = "TEST") 
 	{
 		var folder = "Saves";
 		var folderPath = $"{Application.persistentDataPath}/{folder}";
@@ -19,20 +23,17 @@ public sealed class FileStorage : Storage
 			Directory.CreateDirectory(folderPath);
 		}
 
-		filePath = $"{folderPath}/{fileName}";
+		FilePath = $"{folderPath}/{fileName}";
 	}
 
-
-	#region SAVE
-
-	protected override void SaveInternal() 
+	protected void SaveInternal() 
 	{
-		var file = File.Create(filePath);
-		formatter.Serialize(file, data);
-		file.Close();
+		var path = Path.Combine(FilePath);
+		var bytes = SerializationUtility.SerializeValue(GameData, DataFormat.Binary);
+		File.WriteAllBytes(path, bytes);
 	}
 
-	protected override void SaveAsyncInternal(Action callback = null) 
+	protected void SaveAsyncInternal(Action callback = null) 
 	{
 		var thread = new Thread(() => SaveDataTaskThreaded(callback));
 		thread.Start();
@@ -44,7 +45,7 @@ public sealed class FileStorage : Storage
 		callback?.Invoke();
 	}
 	
-	protected override Coroutine SaveWithRoutineInternal(Action callback = null) 
+	protected Coroutine SaveWithRoutineInternal(Action callback = null) 
 	{
 		return Coroutines.StartRoutine(SaveRoutine(callback));
 	}
@@ -63,28 +64,21 @@ public sealed class FileStorage : Storage
 		callback?.Invoke();
 	}
 
-	#endregion
-
-
-
-	#region LOAD
-	
-	protected override void LoadInternal() 
+	protected void LoadInternal() 
 	{
-		if (!File.Exists(filePath)) 
+		if (!File.Exists(FilePath)) 
 		{
 			var gameDataByDefault = new GameData();
-			data = gameDataByDefault;
+			GameData = gameDataByDefault;
 			Save();
 		}
-
-		var file = File.Open(filePath, FileMode.Open);
-		data = (GameData) formatter.Deserialize(file);
-		file.Close();
+		
+		var bytes = File.ReadAllBytes(FilePath);
+		GameData = SerializationUtility.DeserializeValue<GameData>(bytes, DataFormat.Binary);
 	}
 
 	
-	protected override void LoadAsyncInternal(Action<GameData> callback = null) 
+	protected void LoadAsyncInternal(Action<GameData> callback = null) 
 	{
 		var thread = new Thread(() => LoadDataTaskThreaded(callback));
 		thread.Start();
@@ -93,12 +87,10 @@ public sealed class FileStorage : Storage
 	private void LoadDataTaskThreaded(Action<GameData> callback) 
 	{
 		Load();
-		callback?.Invoke(data);
+		callback?.Invoke(GameData);
 	}
-	
 
-	
-	protected override Coroutine LoadWithRoutineInternal(Action<GameData> callback = null) 
+	protected Coroutine LoadWithRoutineInternal(Action<GameData> callback = null) 
 	{
 		return Coroutines.StartRoutine(LoadRoutine(callback));
 	}
@@ -118,7 +110,70 @@ public sealed class FileStorage : Storage
 		callback?.Invoke(gameData);
 	}
 
-	#endregion
+	public GameData GameData { get; protected set; }
 
+	public void Save() 
+	{
+		OnStorageSaveStartedEvent?.Invoke();
+		SaveInternal();
+		OnStorageSaveCompleteEvent?.Invoke();
+	}
+
+	public void SaveAsync(Action callback = null)
+	{
+		OnStorageSaveStartedEvent?.Invoke();
+		SaveAsyncInternal(callback);
+		OnStorageSaveCompleteEvent?.Invoke();
+	}
+
+	public Coroutine SaveWithRoutine(Action callback = null)
+	{
+		OnStorageSaveStartedEvent?.Invoke();
+		return SaveWithRoutineInternal(() => {
+			callback?.Invoke();
+			OnStorageSaveCompleteEvent?.Invoke();
+		});
+	}
+
+	public void Load() 
+	{
+		LoadInternal();
+		OnStorageLoadedEvent?.Invoke(GameData);
+	}
+
+	public void LoadAsync(Action<GameData> callback = null) 
+	{
+		LoadAsyncInternal(loadedData => {
+			callback?.Invoke(GameData);
+			OnStorageLoadedEvent?.Invoke(GameData);
+		});
+	}
+
+	public Coroutine LoadWithRoutine(Action<GameData> callback = null) 
+	{
+		return LoadWithRoutineInternal(loadedData => {
+			callback?.Invoke(GameData);
+			OnStorageLoadedEvent?.Invoke(GameData);
+		});
+	}
+
+	public T Get<T>(string key) 
+	{
+		return GameData.Get<T>(key);
+	}
 	
+	public T Get<T>(string key, T valueByDefault) 
+	{
+		return GameData.Get(key, valueByDefault);
+	}
+
+	public void Set<T>(string key, T value) 
+	{
+		GameData.Set(key, value);
+	}
+
+	public override string ToString() 
+	{
+		return GameData.ToString();
+	}
 }

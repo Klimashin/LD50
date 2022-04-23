@@ -1,9 +1,11 @@
 using System;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 
 [Serializable]
 public class WorldObjectData
 {
-    public string PrefabAssetAddress;
-    public Vector2 WorldPos;
+    public AssetReference PrefabAssetAddress;
+    public Vector3 WorldPos;
+    public Quaternion WorldRotation;
 }

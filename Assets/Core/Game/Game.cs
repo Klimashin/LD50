@@ -9,8 +9,8 @@ public abstract class Game
     public static ArchitectureComponentState state { get; private set; } = ArchitectureComponentState.NotInitialized;
     public static bool isInitialized => state == ArchitectureComponentState.Initialized;
     public static ISceneManager SceneManager { get; private set; }
-    public static IGameSettings GameSettings { get; private set; }
     public static InputActions InputActions { get; private set; }
+    public static FileStorage FileStorage { get; private set; }
 
     #region GAME RUNNING
 
@@ -23,8 +23,10 @@ public abstract class Game
     {
         state = ArchitectureComponentState.Initializing;
         InputActions = new InputActions();
-
-        InitGameSettings();
+        
+        FileStorage = new FileStorage();
+        FileStorage.Load();
+        
         yield return null;
         
         InitSceneManager();
@@ -34,11 +36,6 @@ public abstract class Game
 
         state = ArchitectureComponentState.Initialized;
         OnGameInitializedEvent?.Invoke();
-    }
-    
-    private static void InitGameSettings() 
-    {
-        GameSettings = new GameSettings();
     }
 
     private static void InitSceneManager() 
@@ -68,18 +65,18 @@ public abstract class Game
         return SceneManager.CurrentScene.GetRepositories<T>();
     }
 
-    public static void SaveGame() 
+    public static void SaveWorldData(WorldData worldData) 
     {
-        SceneManager.CurrentScene.fileStorage.Save();
+        FileStorage.Save();
     }
 
     public static void SaveGameAsync(Action callback) 
     {
-        SceneManager.CurrentScene.fileStorage.SaveAsync(callback);
+        FileStorage.SaveAsync(callback);
     }
 
     public static IEnumerator SaveWithRoutine(Action callback) 
     {
-        yield return SceneManager.CurrentScene.fileStorage.SaveWithRoutine();
+        yield return FileStorage.SaveWithRoutine();
     }
 }

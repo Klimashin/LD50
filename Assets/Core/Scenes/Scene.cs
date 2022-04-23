@@ -2,15 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-
 public sealed class Scene : IScene 
 {
     public SceneConfig sceneConfig { get; }
     public ComponentsBase<IRepository> repositoriesBase { get; }
     public ComponentsBase<IInteractor> interactorsBase { get; }
-    
-    public Storage fileStorage { get; private set; }
-
 
     public Scene(SceneConfig config) 
     {
@@ -31,9 +27,6 @@ public sealed class Scene : IScene
         UI.controller.SendMessageOnCreate();
     }
 
-
-    #region INITIALIZE
-
     public Coroutine InitializeAsync() 
     {
         return Coroutines.StartRoutine(InitializeAsyncRoutine());
@@ -41,12 +34,6 @@ public sealed class Scene : IScene
 
     private IEnumerator InitializeAsyncRoutine() 
     {
-        // TODO: Load storage here if needed.
-        if (sceneConfig.SaveDataForThisScene) {
-            fileStorage = new FileStorage(sceneConfig.SaveName);
-            fileStorage.Load();
-        }
-
         yield return repositoriesBase.InitializeAllComponents();
         yield return interactorsBase.InitializeAllComponents();
         
@@ -55,18 +42,11 @@ public sealed class Scene : IScene
         UI.controller.SendMessageOnInitialize();
     }
 
-    #endregion
-
     public void Start() 
     {
         repositoriesBase.SendMessageOnStart();
         interactorsBase.SendMessageOnStart();
         UI.controller.SendMessageOnStart();
-    }
-
-    public void Save() 
-    {
-        fileStorage?.Save();
     }
 
     public T GetRepository<T>() where T : IRepository 
@@ -88,5 +68,4 @@ public sealed class Scene : IScene
     {
         return interactorsBase.GetComponents<T>();
     }
-
 }

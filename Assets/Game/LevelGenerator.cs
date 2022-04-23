@@ -5,6 +5,8 @@ using UnityEngine;
 public class LevelGenerator
 {
     private readonly LevelGeneratorSettings _settings;
+
+    private WorldData _worldData;
     
     public LevelGenerator(LevelGeneratorSettings settings)
     {
@@ -21,6 +23,13 @@ public class LevelGenerator
     private IEnumerator GenerationRoutine(int seed)
     {
         Random.InitState(seed);
+        
+        _worldData = new WorldData()
+        {
+            WorldSeed = seed,
+            CurrentDay = 0,
+            WorldObjectsData = new List<WorldObjectData>()
+        };
         
         yield return null;
 
@@ -53,6 +62,12 @@ public class LevelGenerator
             else
             {
                 collidersToDestroy.Add(obstaclesCastCollider);
+                _worldData.WorldObjectsData.Add(new WorldObjectData()
+                {
+                    WorldPos = levelObject.transform.position,
+                    WorldRotation = levelObject.transform.rotation,
+                    PrefabAssetAddress = prefab
+                });
                 WorldGenerationProgress = i / (float)_settings.GenerationCount;
             }
         }
@@ -61,6 +76,9 @@ public class LevelGenerator
         {
             Object.Destroy(col);
         }
+        
+        Game.FileStorage.Set("worldData", _worldData);
+        Game.FileStorage.Save();
 
         WorldGenerationProgress = 1f;
 

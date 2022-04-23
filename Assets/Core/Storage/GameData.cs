@@ -7,13 +7,14 @@ using UnityEngine;
 public sealed class GameData : ISerializationCallbackReceiver 
 {
 	
-	public List<string> keys;
-	public List<object> values;
+	public List<string> keys = new List<string>();
+	public List<object> values = new List<object>();
 
 	public Dictionary<string, object>  dataMap = new Dictionary<string, object>();
 
 	
-	public void OnBeforeSerialize() {
+	public void OnBeforeSerialize() 
+	{
 		keys.Clear();
 		values.Clear();
 

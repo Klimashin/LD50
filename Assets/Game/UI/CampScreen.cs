@@ -108,6 +108,8 @@ public class CampScreen : UIScreen
 
             yield return new WaitForSeconds(DeathAnimationFadeDuration);
         }
+        
+        Game.FileStorage.Save();
 
         if (hasAliveCharacters())
         {

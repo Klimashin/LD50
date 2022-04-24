@@ -1,3 +1,4 @@
+using System.Linq;
 using UnityEngine;
 
 public class WorldObject : MonoBehaviour
@@ -17,11 +18,23 @@ public class WorldObject : MonoBehaviour
         
         Random.InitState(_seed);
 
-        var children = GetComponentsInChildren<IWorldObjectRandomDependent>();
-        foreach (var worldObjectRandomDependent in children)
+        var objectSeedDependencies = GetComponentsInChildren<IRandomSeedDependent>();
+        foreach (var seedDependent in objectSeedDependencies)
         {
-            worldObjectRandomDependent.Initialize( RollD100() );
+            seedDependent.Initialize( RollD100() );
         }
+
+        var idObjects = GetComponentsInChildren<ObjectID>().ToList();
+        foreach (var historyEvent in _data.HistoryEventsLog)
+        {
+            var target = idObjects.Find(obj => obj.ID == historyEvent.SourceID);
+            historyEvent.Apply(target.gameObject);
+        }
+    }
+
+    public void AddHistoryEvent(HistoryEvent e)
+    {
+        _data.HistoryEventsLog.Add(e);
     }
 
     private int RollD100()
@@ -30,7 +43,7 @@ public class WorldObject : MonoBehaviour
     }
 }
 
-public interface IWorldObjectRandomDependent
+public interface IRandomSeedDependent
 {
     public void Initialize(int roll);
 }

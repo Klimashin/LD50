@@ -35,12 +35,14 @@ public class CharController : MonoBehaviour
     {
         Game.InputActions.Gameplay.Action.performed += OnAction;
         enabled = true;
+        InteractionCollider.enabled = true;
     }
     
     public void Disable()
     {
         Game.InputActions.Gameplay.Action.performed -= OnAction;
         enabled = false;
+        InteractionCollider.enabled = false;
     }
 
     private void OnAction(InputAction.CallbackContext obj)
@@ -156,7 +158,7 @@ public class CharController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.isTrigger && other.TryGetComponent<ICharacterInteraction>(out var interaction))
+        if (enabled && other.isTrigger && other.TryGetComponent<ICharacterInteraction>(out var interaction))
         {
             interaction.Execute(this);
         }

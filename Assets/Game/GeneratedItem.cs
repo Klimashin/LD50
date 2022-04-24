@@ -2,10 +2,20 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public abstract class GeneratedItem : MonoBehaviour, ICharacterInteraction, IWorldObjectRandomDependent
+[RequireComponent(typeof(ObjectID))]
+public abstract class GeneratedItem : MonoBehaviour, ICharacterInteraction, IRandomSeedDependent
 {
     [Range(0, 100)]
     public int GenerationChance = 100;
+
+    public int ID => GetComponent<ObjectID>().ID;
+
+    protected WorldObject WorldObjectRef;
+
+    private void Awake()
+    {
+        WorldObjectRef = GetComponentInParent<WorldObject>();
+    }
 
     public void Initialize(int roll)
     {

@@ -88,7 +88,7 @@ MonoBehaviour:
   - {x: -4.6245418, y: -1.7845173, z: 0}
   m_ShapePathHash: 701942541
   m_Mesh: {fileID: 0}
-  m_InstanceId: 68866
+  m_InstanceId: 49692
 --- !u!114 &7166871806602179169
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -336,11 +336,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3070082033696873660, guid: 9d3383d34cd68924e8ebd26604f3485b, type: 3}
       propertyPath: m_InstanceId
-      value: -15121760
+      value: -1210008
       objectReference: {fileID: 0}
     - target: {fileID: 7595569564295495182, guid: 9d3383d34cd68924e8ebd26604f3485b, type: 3}
       propertyPath: m_Name
       value: crate (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8286393033952214080, guid: 9d3383d34cd68924e8ebd26604f3485b, type: 3}
+      propertyPath: ID
+      value: 495864006
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9d3383d34cd68924e8ebd26604f3485b, type: 3}
@@ -406,11 +410,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3070082033696873660, guid: 9d3383d34cd68924e8ebd26604f3485b, type: 3}
       propertyPath: m_InstanceId
-      value: -15121696
+      value: -1210028
       objectReference: {fileID: 0}
     - target: {fileID: 7595569564295495182, guid: 9d3383d34cd68924e8ebd26604f3485b, type: 3}
       propertyPath: m_Name
       value: crate
+      objectReference: {fileID: 0}
+    - target: {fileID: 8286393033952214080, guid: 9d3383d34cd68924e8ebd26604f3485b, type: 3}
+      propertyPath: ID
+      value: 1458946518
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9d3383d34cd68924e8ebd26604f3485b, type: 3}
@@ -473,6 +481,10 @@ PrefabInstance:
     - target: {fileID: 3615839254923726036, guid: 248dfeb23523dd2428f2eca118987577, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6893344429720323878, guid: 248dfeb23523dd2428f2eca118987577, type: 3}
+      propertyPath: ID
+      value: 838369578
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 248dfeb23523dd2428f2eca118987577, type: 3}
@@ -746,6 +758,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6893344429720323878, guid: 248dfeb23523dd2428f2eca118987577, type: 3}
+      propertyPath: ID
+      value: 1103752027
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 248dfeb23523dd2428f2eca118987577, type: 3}
 --- !u!4 &8661263377498789947 stripped
@@ -810,11 +826,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3070082033696873660, guid: 9d3383d34cd68924e8ebd26604f3485b, type: 3}
       propertyPath: m_InstanceId
-      value: -15121878
+      value: -1210112
       objectReference: {fileID: 0}
     - target: {fileID: 7595569564295495182, guid: 9d3383d34cd68924e8ebd26604f3485b, type: 3}
       propertyPath: m_Name
       value: crate (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8286393033952214080, guid: 9d3383d34cd68924e8ebd26604f3485b, type: 3}
+      propertyPath: ID
+      value: 2137963783
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9d3383d34cd68924e8ebd26604f3485b, type: 3}
@@ -976,7 +996,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 230246955826308805, guid: c0c445e47943e354082fa29f5ed2d709, type: 3}
       propertyPath: m_InstanceId
-      value: -15121394
+      value: -1210154
       objectReference: {fileID: 0}
     - target: {fileID: 1858064775643170780, guid: c0c445e47943e354082fa29f5ed2d709, type: 3}
       propertyPath: m_Name
@@ -1240,6 +1260,10 @@ PrefabInstance:
     - target: {fileID: 3615839254923726036, guid: 248dfeb23523dd2428f2eca118987577, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6893344429720323878, guid: 248dfeb23523dd2428f2eca118987577, type: 3}
+      propertyPath: ID
+      value: 872938412
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 248dfeb23523dd2428f2eca118987577, type: 3}

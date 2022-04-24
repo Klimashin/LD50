@@ -12,5 +12,7 @@ public class Food : GeneratedItem, ICharacterInteraction
         UI.controller.GetUIElement<GameplayUIScreen>().AddFoodAnimated(Amount);
         Destroy(gameObject);
         _soundSystem.PlayOneShot(Sfx);
+        
+        WorldObjectRef.AddHistoryEvent(new HistoryDisableEvent( ID ));
     }
 }

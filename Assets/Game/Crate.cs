@@ -15,5 +15,7 @@ public class Crate : GeneratedItem
         Highlight(false);
         Destroy(this);
         _soundSystem.PlayOneShot(Sfx);
+        
+        WorldObjectRef.AddHistoryEvent(new HistoryDisableEvent( ID ));
     }
 }

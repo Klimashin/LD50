@@ -14,8 +14,6 @@ public class StartGameScreen : UIScreen
     
     public override void OnStart()
     {
-        _campSystem.Reset();
-        
         _startGameButton.onClick.AddListener(OnStartGameButtonClick);
 
         var worldData = Game.SceneManager.CurrentScene.GetSceneParam<WorldData>("worldData");
@@ -31,7 +29,7 @@ public class StartGameScreen : UIScreen
 
     private void OnStartGameButtonClick()
     {
-        UIController.ShowUIElement<GameplayUIScreen>();
+        UIController.ShowUIElement<CampScreen>();
         Hide();
     }
 
@@ -63,6 +61,7 @@ public class StartGameScreen : UIScreen
         
         GenerationProgressFill.transform.parent.gameObject.SetActive(false);
         _startGameButton.gameObject.SetActive(true);
+        _campSystem.Reset();
 
         _startGameButton.interactable = true;
     }
@@ -91,6 +90,8 @@ public class StartGameScreen : UIScreen
         
         GenerationProgressFill.transform.parent.gameObject.SetActive(false);
         _startGameButton.gameObject.SetActive(true);
+        _campSystem.InitFromWorldData(world);
+        
         _startGameButton.interactable = true;
     }
 }

@@ -57,6 +57,11 @@ public class CampScreen : UIScreen
     protected override void OnPostShow()
     {
         base.OnPostShow();
+
+        var worldData = Game.FileStorage.Get<WorldData>("worldData");
+        worldData.CurrentDay = _campSystem.CurrentDay;
+        worldData.CurrentFood = _campSystem.CurrentFood;
+        Game.FileStorage.Save();
         
         _campAudio.volume = 0f;
         _campAudio.time = _audioTimeCached;
@@ -103,13 +108,12 @@ public class CampScreen : UIScreen
         {
             foreach (var characterName in charactersDiedToday)
             {
+                Game.FileStorage.Get<WorldData>("worldData").DeadCharacters.Add(characterName);
                 yield return StartCoroutine(CharacterDeathAnimation(characterName));
             }
 
             yield return new WaitForSeconds(DeathAnimationFadeDuration);
         }
-        
-        Game.FileStorage.Save();
 
         if (hasAliveCharacters())
         {

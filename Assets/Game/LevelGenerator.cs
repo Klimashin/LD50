@@ -32,7 +32,6 @@ public class LevelGenerator
         _worldData = new WorldData()
         {
             WorldSeed = seed,
-            CurrentDay = 0,
             WorldObjectsData = new List<WorldObjectData>()
         };
         

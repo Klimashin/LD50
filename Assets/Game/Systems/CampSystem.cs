@@ -22,6 +22,20 @@ public class CampSystem : ScriptableObject
             characterData.IsFed = false;
         }
     }
+
+    public void InitFromWorldData(WorldData data)
+    {
+        CurrentFood = data.CurrentFood;
+        CurrentDay = data.CurrentDay;
+        
+        foreach (var characterName in Characters.Keys)
+        {
+            if (data.DeadCharacters.Contains(characterName))
+            {
+                Characters[characterName].IsAlive = false;
+            }
+        }
+    }
 }
 
 [Serializable]

@@ -63,16 +63,6 @@ public abstract class Game
         return SceneManager.CurrentScene.GetRepositories<T>();
     }
 
-    public static void SaveWorldData(WorldData worldData) 
-    {
-        FileStorage.Save();
-    }
-
-    public static void SaveGameAsync(Action callback) 
-    {
-        FileStorage.SaveAsync(callback);
-    }
-
     public static IEnumerator SaveWithRoutine(Action callback) 
     {
         yield return FileStorage.SaveWithRoutine();

@@ -76,8 +76,6 @@ public class StartGameScreen : UIScreen
             var worldObject = worldObjectHandle.Result;
             worldObject.transform.position = worldObjectData.WorldPos;
             worldObject.transform.rotation = worldObjectData.WorldRotation;
-            var col = worldObject.GetComponent<Collider2D>();
-            Destroy(col);
 
             counter++;
 
@@ -88,7 +86,6 @@ public class StartGameScreen : UIScreen
         
         GenerationProgressFill.transform.parent.gameObject.SetActive(false);
         _startGameButton.gameObject.SetActive(true);
-
         _startGameButton.interactable = true;
     }
 }

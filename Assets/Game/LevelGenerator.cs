@@ -33,8 +33,6 @@ public class LevelGenerator
         
         yield return null;
 
-        var collidersToDestroy = new List<Collider2D>();
-        
         for(var i=0; i < _settings.GenerationCount; i++)
         {
             var prefab = _settings.GenerationPrefabs[Random.Range(0, _settings.GenerationPrefabs.Count)];
@@ -61,8 +59,7 @@ public class LevelGenerator
             }
             else
             {
-                collidersToDestroy.Add(obstaclesCastCollider);
-                _worldData.WorldObjectsData.Add(new WorldObjectData()
+                _worldData.WorldObjectsData.Add(new WorldObjectData
                 {
                     WorldPos = levelObject.transform.position,
                     WorldRotation = levelObject.transform.rotation,
@@ -71,12 +68,7 @@ public class LevelGenerator
                 WorldGenerationProgress = i / (float)_settings.GenerationCount;
             }
         }
-        
-        foreach (var col in collidersToDestroy)
-        {
-            Object.Destroy(col);
-        }
-        
+
         Game.FileStorage.Set("worldData", _worldData);
         Game.FileStorage.Save();
 

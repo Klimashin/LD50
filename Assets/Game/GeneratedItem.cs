@@ -1,27 +1,20 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
-public abstract class GeneratedItem : MonoBehaviour, ICharacterInteraction
+public abstract class GeneratedItem : MonoBehaviour, ICharacterInteraction, IWorldObjectRandomDependent
 {
     [Range(0, 100)]
     public int GenerationChance = 100;
 
-    private void Awake()
+    public void Initialize(int roll)
     {
-        GenerationCheck();
-    }
-
-    public void GenerationCheck()
-    {
-        var roll = Random.Range(0, 101);
         if (roll > GenerationChance)
         {
             Destroy(gameObject);
         }
     }
-    
+
     private readonly Color _highlightOnColor = Color.green;
     private readonly Color _highlightOffColor = Color.white;
     private List<SpriteRenderer> _renderers;

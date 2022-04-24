@@ -79,9 +79,8 @@ public class StartGameScreen : UIScreen
                 yield return null;
             }
             
-            var worldObject = worldObjectHandle.Result;
-            worldObject.transform.position = worldObjectData.WorldPos;
-            worldObject.transform.rotation = worldObjectData.WorldRotation;
+            var worldObject = worldObjectHandle.Result.GetComponent<WorldObject>();
+            worldObject.Initialize(worldObjectData);
 
             counter++;
 

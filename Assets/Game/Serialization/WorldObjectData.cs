@@ -8,4 +8,5 @@ public class WorldObjectData
     public AssetReference PrefabAssetAddress;
     public Vector3 WorldPos;
     public Quaternion WorldRotation;
+    public int ObjectSeed;
 }

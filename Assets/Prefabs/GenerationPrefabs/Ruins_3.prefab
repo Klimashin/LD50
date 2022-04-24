@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6761837978742105390}
   - component: {fileID: 6861764682084474712}
   - component: {fileID: 8701598254039565136}
+  - component: {fileID: -4146050643757061040}
   m_Layer: 6
   m_Name: Ruins_3
   m_TagString: Untagged
@@ -29,6 +30,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5476656882478206731}
   - {fileID: 814285327573912629}
@@ -61,6 +63,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ShadowGroup: 0
+  m_ComponentVersion: 1
   m_HasRenderer: 0
   m_UseRendererSilhouette: 1
   m_CastsShadows: 1
@@ -116,6 +119,18 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 9.87471, y: 9.87471}
   m_EdgeRadius: 0
+--- !u!114 &-4146050643757061040
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3107563458383673883}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a3b0bf13556876489db5dbbf29b6cc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6293786038608179472
 GameObject:
   m_ObjectHideFlags: 0
@@ -144,6 +159,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -1.181742, y: 1.1177481, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4598110170466840057}
   - {fileID: 28347990224997459}
@@ -168,6 +184,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ShadowGroup: 0
+  m_ComponentVersion: 1
   m_HasRenderer: 0
   m_UseRendererSilhouette: 1
   m_CastsShadows: 1

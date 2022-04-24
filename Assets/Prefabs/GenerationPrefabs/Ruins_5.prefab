@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6761837978742105390}
   - component: {fileID: 8253033383211261427}
   - component: {fileID: 5524783931417296814}
+  - component: {fileID: 4330757422637567956}
   m_Layer: 6
   m_Name: Ruins_5
   m_TagString: Untagged
@@ -29,6 +30,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 9099543524242849885}
   - {fileID: 8314892600380537081}
@@ -62,6 +64,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ShadowGroup: 0
+  m_ComponentVersion: 1
   m_HasRenderer: 0
   m_UseRendererSilhouette: 1
   m_CastsShadows: 1
@@ -127,6 +130,18 @@ PolygonCollider2D:
       - {x: -4.8821383, y: -3.6719193}
       - {x: 5.2502255, y: -3.6923685}
       - {x: 5.1431627, y: 6.3211117}
+--- !u!114 &4330757422637567956
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3107563458383673883}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a3b0bf13556876489db5dbbf29b6cc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &289063435815301861
 PrefabInstance:
   m_ObjectHideFlags: 0

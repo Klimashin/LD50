@@ -1,6 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Object = UnityEngine.Object;
+using Random = UnityEngine.Random;
 
 public class LevelGenerator
 {
@@ -22,6 +25,8 @@ public class LevelGenerator
 
     private IEnumerator GenerationRoutine(int seed)
     {
+        var generationResult = new Dictionary<WorldObject, WorldObjectData>();
+        
         Random.InitState(seed);
         
         _worldData = new WorldData()
@@ -59,14 +64,29 @@ public class LevelGenerator
             }
             else
             {
-                _worldData.WorldObjectsData.Add(new WorldObjectData
+                var objectWorldData = new WorldObjectData
                 {
                     WorldPos = levelObject.transform.position,
                     WorldRotation = levelObject.transform.rotation,
-                    PrefabAssetAddress = prefab
-                });
+                    PrefabAssetAddress = prefab,
+                    ObjectSeed = Random.Range(1, int.MaxValue)
+                };
+                
+                _worldData.WorldObjectsData.Add(objectWorldData);
+
+                var worldObjectComponent = levelObject.GetComponent<WorldObject>();
+                Debug.Assert(worldObjectComponent != null, $"levelObject {levelObject.name} missing WorldObject component!");
+
+                generationResult[worldObjectComponent] = objectWorldData;
+
                 WorldGenerationProgress = i / (float)_settings.GenerationCount;
             }
+        }
+        
+        // this should always be called after all seeded objects are placed
+        foreach (var (worldObject, worldObjectData) in generationResult)
+        {
+            worldObject.Initialize(worldObjectData);
         }
 
         Game.FileStorage.Set("worldData", _worldData);

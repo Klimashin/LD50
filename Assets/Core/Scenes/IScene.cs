@@ -4,9 +4,11 @@ using UnityEngine;
 public interface IScene 
 {
     
-    SceneConfig sceneConfig { get; }
-    ComponentsBase<IRepository> repositoriesBase { get; }
-    ComponentsBase<IInteractor> interactorsBase { get; }
+    SceneConfig SceneConfig { get; }
+    ComponentsBase<IRepository> RepositoriesBase { get; }
+    ComponentsBase<IInteractor> InteractorsBase { get; }
+
+    T GetSceneParam<T>(string key);
 
 
     void BuildUI();

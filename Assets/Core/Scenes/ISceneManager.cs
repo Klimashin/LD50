@@ -12,6 +12,6 @@ public interface ISceneManager
     IScene CurrentScene { get; }
     Dictionary<string, SceneConfig> ScenesConfigMap { get; }
 
-    Coroutine LoadScene(string sceneName, UnityAction<SceneConfig> sceneLoadedCallback = null);
-    Coroutine InitializeCurrentScene(UnityAction<SceneConfig> sceneLoadedCallback = null);
+    Coroutine LoadScene(string sceneName, Dictionary<string, object> sceneParams = null);
+    Coroutine InitializeCurrentScene(Dictionary<string, object> sceneParams = null);
 }

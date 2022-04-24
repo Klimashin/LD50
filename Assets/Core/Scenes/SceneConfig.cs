@@ -4,8 +4,8 @@ using System.Linq;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "SceneConfig", menuName = "Architecture/Scenes/New SceneConfig")]
-public sealed class SceneConfig : ScriptableObject {
-
+public sealed class SceneConfig : ScriptableObject
+{
     [SerializeField, SceneName] private string _sceneName;
 
     [Header("======= CORE ARCHITECTURE =======")]
@@ -19,17 +19,10 @@ public sealed class SceneConfig : ScriptableObject {
     [Header("======= UI STRUCTURE ======="), Space (20)]
     [SerializeField]
     private List<GameObject> _uiPrefabs;
-    
-    [Header("======= STORAGE SETTING S======="), Space(20)]
-    [SerializeField] private bool _saveDataForThisScene;
-    [SerializeField] private string _saveName;
-    
+
     public string SceneName => _sceneName;
     public string[] RepositoriesReferences => _repositoryReferences;
     public string[] InteractorsReferences => _interactorsReferences;
-
-    public bool SaveDataForThisScene => _saveDataForThisScene;
-    public string SaveName => _saveName;
 
     public IUIElementOnLayer[] GetUIPrefabs()
     {

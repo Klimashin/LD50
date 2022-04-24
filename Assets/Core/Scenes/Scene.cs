@@ -4,68 +4,80 @@ using UnityEngine;
 
 public sealed class Scene : IScene 
 {
-    public SceneConfig sceneConfig { get; }
-    public ComponentsBase<IRepository> repositoriesBase { get; }
-    public ComponentsBase<IInteractor> interactorsBase { get; }
-
-    public Scene(SceneConfig config) 
+    public SceneConfig SceneConfig { get; }
+    public ComponentsBase<IRepository> RepositoriesBase { get; }
+    public ComponentsBase<IInteractor> InteractorsBase { get; }
+    
+    public T GetSceneParam<T>(string key)
     {
-        sceneConfig = config;
-        repositoriesBase = new ComponentsBase<IRepository>(config.RepositoriesReferences);
-        interactorsBase = new ComponentsBase<IInteractor>(config.InteractorsReferences);
+        if (_sceneParams.ContainsKey(key) && _sceneParams[key] is T)
+        {
+            return (T) _sceneParams[key];
+        }
+
+        return default;
+    }
+
+    private readonly Dictionary<string, object> _sceneParams;
+    public Scene(SceneConfig config, Dictionary<string, object> sceneParams = null) 
+    {
+        SceneConfig = config;
+        _sceneParams = sceneParams ?? new Dictionary<string, object>(); 
+        RepositoriesBase = new ComponentsBase<IRepository>(config.RepositoriesReferences);
+        InteractorsBase = new ComponentsBase<IInteractor>(config.InteractorsReferences);
     }
 
     public void BuildUI()
     {
-        UI.Build(sceneConfig);
+        UI.Build(SceneConfig);
     }
     
     public void SendMessageOnCreate() 
     {
-        repositoriesBase.SendMessageOnCreate();
-        repositoriesBase.SendMessageOnCreate();
+        RepositoriesBase.SendMessageOnCreate();
+        RepositoriesBase.SendMessageOnCreate();
         UI.controller.SendMessageOnCreate();
     }
 
-    public Coroutine InitializeAsync() 
+    public Coroutine InitializeAsync()
     {
         return Coroutines.StartRoutine(InitializeAsyncRoutine());
     }
 
     private IEnumerator InitializeAsyncRoutine() 
     {
-        yield return repositoriesBase.InitializeAllComponents();
-        yield return interactorsBase.InitializeAllComponents();
+        yield return RepositoriesBase.InitializeAllComponents();
+        yield return InteractorsBase.InitializeAllComponents();
         
-        repositoriesBase.SendMessageOnInitialize();
-        interactorsBase.SendMessageOnInitialize();
+        RepositoriesBase.SendMessageOnInitialize();
+        InteractorsBase.SendMessageOnInitialize();
         UI.controller.SendMessageOnInitialize();
     }
 
     public void Start() 
     {
-        repositoriesBase.SendMessageOnStart();
-        interactorsBase.SendMessageOnStart();
+        RepositoriesBase.SendMessageOnStart();
+        InteractorsBase.SendMessageOnStart();
         UI.controller.SendMessageOnStart();
     }
 
     public T GetRepository<T>() where T : IRepository 
     {
-        return repositoriesBase.GetComponent<T>();
+        return RepositoriesBase.GetComponent<T>();
     }
 
     public IEnumerable<T> GetRepositories<T>() where T : IRepository 
     {
-        return repositoriesBase.GetComponents<T>();
+        return RepositoriesBase.GetComponents<T>();
     }
 
     public T GetInteractor<T>() where T : IInteractor 
     {
-        return interactorsBase.GetComponent<T>();
+        return InteractorsBase.GetComponent<T>();
     }
     
     public IEnumerable<T> GetInteractors<T>() where T : IInteractor 
     {
-        return interactorsBase.GetComponents<T>();
+        return InteractorsBase.GetComponents<T>();
     }
 }

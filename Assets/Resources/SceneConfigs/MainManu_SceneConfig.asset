@@ -18,5 +18,5 @@ MonoBehaviour:
   _uiPrefabs:
   - {fileID: 3619973607868595581, guid: 866e238bd5c64204c908c1a93951da04, type: 3}
   - {fileID: 3619973607868595581, guid: bbbec31861a1cfa41bec825864b50c3d, type: 3}
-  _saveDataForThisScene: 0
-  _saveName: 
+  - {fileID: 3619973607868595581, guid: f558e1a279bb91646ab76bf2c0427da6, type: 3}
+  - {fileID: 3619973607868595581, guid: d330be30a16f88749a11cab8e3849434, type: 3}

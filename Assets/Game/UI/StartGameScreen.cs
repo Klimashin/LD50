@@ -17,9 +17,16 @@ public class StartGameScreen : UIScreen
         _campSystem.Reset();
         
         _startGameButton.onClick.AddListener(OnStartGameButtonClick);
-        
-        var world = Game.FileStorage.Get<WorldData>("worldData");
-        StartCoroutine(world != null ? WorldRestoration(world) : WorldGeneration());
+
+        var worldData = Game.SceneManager.CurrentScene.GetSceneParam<WorldData>("worldData");
+        if (worldData != null)
+        {
+            StartCoroutine(WorldRestoration(worldData));
+        }
+        else
+        {
+            StartCoroutine(WorldGeneration(Game.SceneManager.CurrentScene.GetSceneParam<int>("worldSeed")));
+        }
     }
 
     private void OnStartGameButtonClick()
@@ -34,7 +41,7 @@ public class StartGameScreen : UIScreen
             GenerationProgressFill.fillAmount = _generator.WorldGenerationProgress;
     }
 
-    private IEnumerator WorldGeneration()
+    private IEnumerator WorldGeneration(int seed)
     {
         Time.timeScale = 1;
         
@@ -52,7 +59,6 @@ public class StartGameScreen : UIScreen
         yield return null;
         yield return null;
         
-        var seed = 12345;
         yield return _generator.Generate(seed);
         
         GenerationProgressFill.transform.parent.gameObject.SetActive(false);

@@ -5,6 +5,7 @@ public class MainMenuScreen : UIScreen
 {
     [SerializeField, SceneName] private string _gameplaySceneName;
     
+    [SerializeField] private Button _continueGameButton;
     [SerializeField] private Button _startGameButton;
     [SerializeField] private Button _settingsButton;
     [SerializeField] private Button _quitButton;
@@ -16,6 +17,7 @@ public class MainMenuScreen : UIScreen
         
         _fireShadow.enabled = true;
         SetMenuButtonsActive(true);
+        _continueGameButton.gameObject.SetActive(Game.FileStorage.Get<WorldData>("worldData") != null);
     }
 
     protected override void OnPreShow()
@@ -27,6 +29,7 @@ public class MainMenuScreen : UIScreen
 
     private void SetMenuButtonsActive(bool buttonsActive)
     {
+        _continueGameButton.gameObject.SetActive(buttonsActive);
         _startGameButton.gameObject.SetActive(buttonsActive);
         _settingsButton.gameObject.SetActive(buttonsActive);
         _quitButton.gameObject.SetActive(buttonsActive);
@@ -36,10 +39,11 @@ public class MainMenuScreen : UIScreen
     {
         Time.timeScale = 1f;
         _startGameButton.onClick.AddListener(OnStartButtonClick);
+        _continueGameButton.onClick.AddListener(OnContinueButtonClick);
         _settingsButton.onClick.AddListener(OnSettingsButtonClick);
         _quitButton.onClick.AddListener(OnQuitButtonClick);
     }
-
+    
     private void OnDisable()
     {
         _startGameButton.onClick.RemoveListener(OnStartButtonClick);
@@ -47,9 +51,14 @@ public class MainMenuScreen : UIScreen
         _quitButton.onClick.RemoveListener(OnQuitButtonClick);
     }
 
+    private void OnContinueButtonClick()
+    {
+        UIController.ShowUIElement<ContinueGamePopup>();
+    }
+
     private void OnStartButtonClick()
     {
-        Game.SceneManager.LoadScene(_gameplaySceneName);
+        UIController.ShowUIElement<NewGamePopup>();
     }
 
     private void OnSettingsButtonClick()

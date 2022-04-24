@@ -29,18 +29,16 @@ public abstract class Game
         
         yield return null;
         
-        InitSceneManager();
-        yield return null;
-
-        yield return SceneManager.InitializeCurrentScene();
+        yield return InitSceneManager();
 
         state = ArchitectureComponentState.Initialized;
         OnGameInitializedEvent?.Invoke();
     }
 
-    private static void InitSceneManager() 
+    private static IEnumerator InitSceneManager() 
     {
         SceneManager = new SceneManager();
+        yield return SceneManager.InitializeCurrentScene();
     }
 
     #endregion

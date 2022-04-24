@@ -2,7 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 
 public class SceneManager : ISceneManager
 {
@@ -29,18 +28,18 @@ public class SceneManager : ISceneManager
         }
     }
 
-    public Coroutine LoadScene(string sceneName, UnityAction<SceneConfig> sceneLoadedCallback = null) 
+    public Coroutine LoadScene(string sceneName, Dictionary<string, object> sceneParams = null) 
     {
-        return LoadAndInitializeScene(sceneName, sceneLoadedCallback, true);
+        return LoadAndInitializeScene(sceneName, true, sceneParams);
     }
     
-    public Coroutine InitializeCurrentScene(UnityAction<SceneConfig> sceneLoadedCallback = null) 
+    public Coroutine InitializeCurrentScene(Dictionary<string, object> sceneParams = null) 
     {
         var sceneName = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
-        return LoadAndInitializeScene(sceneName, sceneLoadedCallback, false);
+        return LoadAndInitializeScene(sceneName, false, sceneParams);
     }
 
-    private Coroutine LoadAndInitializeScene(string sceneName, UnityAction<SceneConfig> sceneLoadedCallback, bool loadNewScene) 
+    private Coroutine LoadAndInitializeScene(string sceneName, bool loadNewScene, Dictionary<string, object> sceneParams = null) 
     {
         ScenesConfigMap.TryGetValue(sceneName, out var config);
 
@@ -49,10 +48,10 @@ public class SceneManager : ISceneManager
             throw new NullReferenceException($"There is no scene ({sceneName}) in the scenes list. The name is wrong or you forget to add it o the list.");
         }
 
-        return Coroutines.StartRoutine(LoadSceneRoutine(config, sceneLoadedCallback, loadNewScene));
+        return Coroutines.StartRoutine(LoadSceneRoutine(config, loadNewScene, sceneParams));
     }
 
-    private IEnumerator LoadSceneRoutine(SceneConfig config, UnityAction<SceneConfig> sceneLoadedCallback, bool loadNewScene = true) 
+    private IEnumerator LoadSceneRoutine(SceneConfig config, bool loadNewScene, Dictionary<string, object> sceneParams) 
     {
         LoadingScreen.Instance.Show(this);
             
@@ -64,13 +63,12 @@ public class SceneManager : ISceneManager
             yield return Coroutines.StartRoutine(LoadSceneAsyncRoutine(config));
         }
 
-        yield return Coroutines.StartRoutine(InitializeSceneRoutine(config));
+        yield return Coroutines.StartRoutine(InitializeSceneRoutine(config, sceneParams));
 
         yield return new WaitForSecondsRealtime(0.1f);
         IsLoading = false;
         OnSceneLoadCompletedEvent?.Invoke(config);
-        sceneLoadedCallback?.Invoke(config);
-        
+
         LoadingScreen.Instance.Hide(this);
     }
 
@@ -91,10 +89,10 @@ public class SceneManager : ISceneManager
         asyncOperation.allowSceneActivation = true;
     }
 
-    private IEnumerator InitializeSceneRoutine(SceneConfig config) 
+    private IEnumerator InitializeSceneRoutine(SceneConfig config, Dictionary<string, object> sceneParams) 
     {
 
-        CurrentScene = new Scene(config);
+        CurrentScene = new Scene(config, sceneParams);
         yield return null;
 
         CurrentScene.BuildUI();
@@ -107,5 +105,4 @@ public class SceneManager : ISceneManager
 
         CurrentScene.Start();
     }
-
 }

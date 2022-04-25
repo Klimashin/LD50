@@ -21,6 +21,7 @@ public class CharacterUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     private void Awake()
     {
         _characterData = _campSystemRef.Characters[Name];
+        _characterImage.alphaHitTestMinimumThreshold = 0.1f;
     }
 
     private void Update()
@@ -29,6 +30,8 @@ public class CharacterUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         {
             _characterOutlineImage.gameObject.SetActive(false);
         }
+
+        _characterFoodImage.enabled = _characterData.IsFed;
     }
     
     private const float DEATH_ANIMATION_FADE_DURATION = 2f;
@@ -50,11 +53,6 @@ public class CharacterUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         _characterFoodImage.enabled = true;
     }
 
-    public void SetUnfed()
-    {
-        _characterFoodImage.enabled = false;
-    }
-    
     private const float REPLICA_SHOW_DURATION = 5f;
     private IEnumerator ShowSpeechBubble()
     {

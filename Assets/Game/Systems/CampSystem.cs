@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -23,6 +25,28 @@ public class CampSystem : ScriptableObject
         }
     }
 
+    public void StartCampPhase()
+    {
+        CurrentDay++;
+        
+        foreach (var charData in Characters.Values)
+        {
+            charData.IsFed = false;   
+        }
+        
+        var worldData = Game.FileStorage.Get<WorldData>("worldData");
+        worldData.CurrentDay = CurrentDay;
+        worldData.CurrentFood = CurrentFood;
+        worldData.DeadCharacters =
+            new HashSet<string>(Characters.Values.Where(character => !character.IsAlive).Select(c => c.Name));
+        Game.FileStorage.Save();
+    }
+
+    public List<string> EndCampPhase()
+    {
+        return KillStarvingCharacters();
+    }
+
     public void InitFromWorldData(WorldData data)
     {
         CurrentFood = data.CurrentFood;
@@ -35,6 +59,23 @@ public class CampSystem : ScriptableObject
                 Characters[characterName].IsAlive = false;
             }
         }
+    }
+    
+    public bool HasAliveCharacters()
+    {
+        return Characters.Values.ToList().Exists(character => character.IsAlive);
+    }
+    
+    private List<string> KillStarvingCharacters()
+    {
+        var result = new List<string>();
+        foreach (var character in Characters.Values.Where(character => character.IsAlive && !character.IsFed))
+        {
+            character.IsAlive = false;
+            result.Add(character.Name);
+        }
+
+        return result;
     }
 }
 

@@ -1,11 +1,14 @@
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class WorldObject : MonoBehaviour
 {
     private WorldObjectData _data;
 
     private int _seed;
+    private readonly List<HistoryEvent> _unsavedHistoryEvents = new();
     
     public void Initialize(WorldObjectData data)
     {
@@ -30,16 +33,29 @@ public class WorldObject : MonoBehaviour
             var target = idObjects.Find(obj => obj.ID == historyEvent.SourceID);
             historyEvent.Apply(target.gameObject);
         }
+
+        Game.FileStorage.OnStorageSaveStartedEvent += PersistHistoryEvents;
     }
 
     public void AddHistoryEvent(HistoryEvent e)
     {
-        _data.HistoryEventsLog.Add(e);
+        _unsavedHistoryEvents.Add(e);
+    }
+
+    private void PersistHistoryEvents()
+    {
+        _data.HistoryEventsLog.AddRange(_unsavedHistoryEvents);
+        _unsavedHistoryEvents.Clear();
     }
 
     private int RollD100()
     {
         return Random.Range(1, 101);
+    }
+
+    private void OnDisable()
+    {
+        Game.FileStorage.OnStorageSaveStartedEvent -= PersistHistoryEvents;
     }
 }
 

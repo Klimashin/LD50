@@ -27,8 +27,6 @@ public class CampSystem : ScriptableObject
 
     public void StartCampPhase()
     {
-        CurrentDay++;
-        
         foreach (var charData in Characters.Values)
         {
             charData.IsFed = false;   
@@ -39,7 +37,10 @@ public class CampSystem : ScriptableObject
         worldData.CurrentFood = CurrentFood;
         worldData.DeadCharacters =
             new HashSet<string>(Characters.Values.Where(character => !character.IsAlive).Select(c => c.Name));
+        
         Game.FileStorage.Save();
+        
+        CurrentDay++;
     }
 
     public List<string> EndCampPhase()
@@ -49,6 +50,8 @@ public class CampSystem : ScriptableObject
 
     public void InitFromWorldData(WorldData data)
     {
+        Reset();
+        
         CurrentFood = data.CurrentFood;
         CurrentDay = data.CurrentDay;
         

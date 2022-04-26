@@ -62,9 +62,4 @@ public abstract class Game
     {
         return SceneManager.CurrentScene.GetRepositories<T>();
     }
-
-    public static IEnumerator SaveWithRoutine(Action callback) 
-    {
-        yield return FileStorage.SaveWithRoutine();
-    }
 }

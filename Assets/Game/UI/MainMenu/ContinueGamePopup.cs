@@ -15,7 +15,8 @@ public class ContinueGamePopup : UIPopup
     protected override void OnPreShow()
     {
         base.OnPreShow();
-
+        
+        Game.FileStorage.Load(); // to reset worldData from previously ran gameplay scene
         _worldData = Game.FileStorage.Get<WorldData>("worldData");
         _seedText.text = _worldData.WorldSeed.ToString();
     }

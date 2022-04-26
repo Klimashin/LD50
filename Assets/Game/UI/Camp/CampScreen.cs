@@ -36,6 +36,16 @@ public class CampScreen : UIScreen
         _campAudio.Pause();
     }
 
+    protected override void OnPreShow()
+    {
+        base.OnPreShow();
+        foreach (var (charName, charUi) in _characterNameToUiDict)
+        {
+            if (!_campSystem.Characters[charName].IsAlive)
+                charUi.gameObject.SetActive(false);
+        }
+    }
+
     protected override void OnPostShow()
     {
         base.OnPostShow();

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using DG.Tweening;
 using TMPro;
@@ -23,6 +24,8 @@ public class GameplayUIScreen : UIScreen
     {
         base.OnCreate();
         _gameplayAudio = GetComponent<AudioSource>();
+        _pauseMenu = UIController.GetUIElement<PauseMenuPopup>();
+        _charController = GameObject.FindGameObjectWithTag("Player").GetComponent<CharController>();
     }
 
     public void AddFoodAnimated(int amount)
@@ -46,14 +49,9 @@ public class GameplayUIScreen : UIScreen
     protected override void OnPostShow()
     {
         base.OnPostShow();
-        _pauseMenu = UIController.GetUIElement<PauseMenuPopup>();
-        _charController = GameObject.FindGameObjectWithTag("Player").GetComponent<CharController>();
 
-        _pauseMenu.OnElementStartShowEvent += OnPauseMenuShow;
-        _pauseMenu.OnElementHiddenCompletelyEvent += OnPauseMenuHide;
-        _pauseButton.onClick.AddListener(OnPauseButtonClick);
-        Game.InputActions.Gameplay.Pause.performed += OnPauseAction;
-        Game.InputActions.Gameplay.Enable();
+        BindActions();
+        
         Cursor.visible = false;
         _gameplayAudio.volume = 0f;
         _gameplayAudio.time = _audioTimeCached;
@@ -63,18 +61,38 @@ public class GameplayUIScreen : UIScreen
         StartCoroutine(GameplayCoroutine());
     }
 
+    private void OnDestroy()
+    {
+        UnbindActions();
+    }
+
     protected override void OnPreHide()
     {
         base.OnPreHide();
+        
+        UnbindActions();
+        
+        Cursor.visible = true;
+        _audioTimeCached = _gameplayAudio.time;
+        _gameplayAudio.Pause();
+    }
 
+    private void BindActions()
+    {
+        _pauseMenu.OnElementStartShowEvent += OnPauseMenuShow;
+        _pauseMenu.OnElementHiddenCompletelyEvent += OnPauseMenuHide;
+        _pauseButton.onClick.AddListener(OnPauseButtonClick);
+        Game.InputActions.Gameplay.Pause.performed += OnPauseAction;
+        Game.InputActions.Gameplay.Enable();
+    }
+
+    private void UnbindActions()
+    {
         _pauseButton.onClick.RemoveListener(OnPauseButtonClick);
         Game.InputActions.Gameplay.Pause.performed -= OnPauseAction;
         _pauseMenu.OnElementStartShowEvent -= OnPauseMenuShow;
         _pauseMenu.OnElementHiddenCompletelyEvent -= OnPauseMenuHide;
         Game.InputActions.Gameplay.Disable();
-        Cursor.visible = true;
-        _audioTimeCached = _gameplayAudio.time;
-        _gameplayAudio.Pause();
     }
 
     private void Update()
@@ -96,8 +114,13 @@ public class GameplayUIScreen : UIScreen
         Cursor.visible = false;
     }
 
-    private void OnPauseAction(InputAction.CallbackContext obj)
+    private void OnPauseAction(InputAction.CallbackContext context)
     {
+        if (!context.performed)
+        {
+            return;
+        }
+
         var pauseMenu = UIController.GetUIElement<PauseMenuPopup>();
         if (pauseMenu.IsActive)
         {

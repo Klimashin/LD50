@@ -89,7 +89,6 @@ public class LevelGenerator
         }
 
         Game.FileStorage.Set("worldData", _worldData);
-        Game.FileStorage.Save();
 
         WorldGenerationProgress = 1f;
 

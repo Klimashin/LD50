@@ -1,13 +1,16 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using Unity.Mathematics;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 using Object = UnityEngine.Object;
 using Random = UnityEngine.Random;
 
 public class LevelGenerator
 {
     private readonly LevelGeneratorSettings _settings;
+    private readonly Dictionary<WorldObject, WorldObjectData> _generationResult = new ();
 
     private WorldData _worldData;
     
@@ -25,8 +28,6 @@ public class LevelGenerator
 
     private IEnumerator GenerationRoutine(int seed)
     {
-        var generationResult = new Dictionary<WorldObject, WorldObjectData>();
-        
         Random.InitState(seed);
         
         _worldData = new WorldData()
@@ -34,56 +35,50 @@ public class LevelGenerator
             WorldSeed = seed,
             WorldObjectsData = new List<WorldObjectData>()
         };
-        
+
+        yield return GenerationStep();
+
+        yield return InitializationStep();
+    }
+
+    private IEnumerator GenerationStep()
+    {
         yield return null;
 
-        for(var i=0; i < _settings.GenerationCount; i++)
+        var totalObjectsToSpawn = _settings.Zones.Sum(z => z.ObjectsCount);
+        var totalObjectSpawnedCount = 0;
+        foreach (var generationZone in _settings.Zones)
         {
-            var prefab = _settings.GenerationPrefabs[Random.Range(0, _settings.GenerationPrefabs.Count)];
-            var levelObjectHandle = prefab.InstantiateAsync();
-            while (!levelObjectHandle.IsDone)
+            var spawnedObjectsCount = 0;
+            var requiredObjects = generationZone.GenerationAssets.FindAll(a => a.IsExactSpawnCount);
+            foreach (var generationAsset in requiredObjects)
             {
-                yield return null;
-            }
-
-            var levelObject = levelObjectHandle.Result;
-            levelObject.transform.position = new Vector3(Random.Range(-1f, 1f) * _settings.GenerationSize, Random.Range(-1f, 1f) * _settings.GenerationSize, 0f);;
-            levelObject.transform.rotation = Quaternion.Euler(new Vector3(0f, 0f, Random.Range(0f, 360f)));
-            
-            yield return null;
-
-            var obstaclesCastCollider = levelObject.GetComponent<Collider2D>();
-            var result = new List<Collider2D>();
-            var filter = new ContactFilter2D { useLayerMask = true, layerMask = _settings.GenerationLayerMask };
-            var castResultsCount = obstaclesCastCollider.OverlapCollider(filter, result);
-            if (castResultsCount > 0)
-            {
-                Object.Destroy(levelObject.gameObject);
-                i--;
-            }
-            else
-            {
-                var objectWorldData = new WorldObjectData
+                for (var i = 0; i < generationAsset.SpawnCount; i++)
                 {
-                    WorldPos = levelObject.transform.position,
-                    WorldRotation = levelObject.transform.rotation,
-                    PrefabAssetAddress = prefab,
-                    ObjectSeed = Random.Range(1, int.MaxValue)
-                };
-                
-                _worldData.WorldObjectsData.Add(objectWorldData);
+                    yield return SpawnRadial(generationAsset, generationZone.MinR, generationZone.MaxR);
+                    totalObjectSpawnedCount++;
+                    spawnedObjectsCount++;
+                    WorldGenerationProgress = totalObjectSpawnedCount / (float)totalObjectsToSpawn;
+                }
+            }
 
-                var worldObjectComponent = levelObject.GetComponent<WorldObject>();
-                Debug.Assert(worldObjectComponent != null, $"levelObject {levelObject.name} missing WorldObject component!");
-
-                generationResult[worldObjectComponent] = objectWorldData;
-
-                WorldGenerationProgress = i / (float)_settings.GenerationCount;
+            var objectsToSpawn = generationZone.GenerationAssets.FindAll(a => !a.IsExactSpawnCount);
+            while (spawnedObjectsCount < generationZone.ObjectsCount)
+            {
+                var generationAsset = objectsToSpawn[Random.Range(0, objectsToSpawn.Count)];
+                yield return SpawnRadial(generationAsset, generationZone.MinR, generationZone.MaxR);
+                totalObjectSpawnedCount++;
+                spawnedObjectsCount++;
+                WorldGenerationProgress = totalObjectSpawnedCount / (float)totalObjectsToSpawn;
             }
         }
+    }
+
+    private IEnumerator InitializationStep()
+    {
+        yield return null;
         
-        // this should always be called after all seeded objects are placed
-        foreach (var (worldObject, worldObjectData) in generationResult)
+        foreach (var (worldObject, worldObjectData) in _generationResult)
         {
             worldObject.Initialize(worldObjectData);
         }
@@ -93,5 +88,59 @@ public class LevelGenerator
         WorldGenerationProgress = 1f;
 
         yield return null;
+    }
+
+    private void OnObjectSpawned(GameObject levelObject, AssetReference assetRef)
+    {
+        var objectWorldData = new WorldObjectData
+        {
+            WorldPos = levelObject.transform.position,
+            WorldRotation = levelObject.transform.rotation,
+            PrefabAssetAddress = assetRef,
+            ObjectSeed = Random.Range(1, int.MaxValue)
+        };
+                
+        _worldData.WorldObjectsData.Add(objectWorldData);
+
+        var worldObjectComponent = levelObject.GetComponent<WorldObject>();
+        Debug.Assert(worldObjectComponent != null, $"levelObject {levelObject.name} missing WorldObject component!");
+        
+        _generationResult.Add(worldObjectComponent, objectWorldData);
+    }
+
+    private IEnumerator SpawnRadial(GenerationAsset genAsset, float minR, float maxR)
+    {
+        GameObject spawnResult = null;
+        
+        var assetRef = genAsset.AssetRef;
+        var levelObjectHandle = assetRef.InstantiateAsync();
+        while (!levelObjectHandle.IsDone)
+        {
+            yield return null;
+        }
+        
+        var castResult = new List<Collider2D>();
+        var levelObject = levelObjectHandle.Result;
+        while (spawnResult == null)
+        {
+            castResult.Clear();
+            var randomAngle = Random.Range(0f, 2 * math.PI);
+            var randomR = Random.Range(minR, maxR);
+            var pos = new Vector3(randomR * Mathf.Cos(randomAngle), randomR * Mathf.Sin(randomAngle), 0f);
+            levelObject.transform.position = pos;
+            levelObject.transform.rotation = Quaternion.Euler(new Vector3(0f, 0f, Random.Range(0f, 360f)));
+            
+            Physics2D.SyncTransforms();
+
+            var obstaclesCastCollider = levelObject.GetComponent<Collider2D>();
+            var filter = new ContactFilter2D { useLayerMask = true, layerMask = _settings.GenerationLayerMask };
+            var castResultsCount = obstaclesCastCollider.OverlapCollider(filter, castResult);
+            if (castResultsCount == 0)
+            {
+                spawnResult = levelObject;
+            }
+        }
+
+        OnObjectSpawned(spawnResult, genAsset.AssetRef);
     }
 }

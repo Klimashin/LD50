@@ -12,37 +12,80 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 267a0738e0d0f204395c4efc065e11d2, type: 3}
   m_Name: GeneratorSettings
   m_EditorClassIdentifier: 
-  GenerationSize: 100
-  GenerationCount: 100
-  GenerationPrefabs:
-  - m_AssetGUID: d2786c91aff1fae45b29d2be6b91450e
-    m_SubObjectName: 
-    m_SubObjectType: 
-    m_EditorAssetChanged: 0
-  - m_AssetGUID: 9287851823b979346912bb413bed78ca
-    m_SubObjectName: 
-    m_SubObjectType: 
-    m_EditorAssetChanged: 0
-  - m_AssetGUID: 8cb978edd3d706543aecaac973d58a28
-    m_SubObjectName: 
-    m_SubObjectType: 
-    m_EditorAssetChanged: 0
-  - m_AssetGUID: ac62df912a178de43b8c0a65a81f68da
-    m_SubObjectName: 
-    m_SubObjectType: 
-    m_EditorAssetChanged: 0
-  - m_AssetGUID: 23a11724397c4f24a8f8cfc475e6eaca
-    m_SubObjectName: 
-    m_SubObjectType: 
-    m_EditorAssetChanged: 0
-  - m_AssetGUID: e9551efc61bf9a94ab747777b8d33bae
-    m_SubObjectName: 
-    m_SubObjectType: 
-    m_EditorAssetChanged: 0
-  - m_AssetGUID: b62570a1c754f234b8340d165582c968
-    m_SubObjectName: 
-    m_SubObjectType: 
-    m_EditorAssetChanged: 0
+  Zones:
+  - GenerationAssets:
+    - AssetRef:
+        m_AssetGUID: d2786c91aff1fae45b29d2be6b91450e
+        m_SubObjectName: 
+        m_SubObjectType: 
+        m_EditorAssetChanged: 0
+      IsMaxCount: 0
+      MaxCount: 0
+      IsExactSpawnCount: 0
+      SpawnCount: 0
+    - AssetRef:
+        m_AssetGUID: 9287851823b979346912bb413bed78ca
+        m_SubObjectName: 
+        m_SubObjectType: 
+        m_EditorAssetChanged: 0
+      IsMaxCount: 0
+      MaxCount: 0
+      IsExactSpawnCount: 0
+      SpawnCount: 0
+    - AssetRef:
+        m_AssetGUID: 8cb978edd3d706543aecaac973d58a28
+        m_SubObjectName: 
+        m_SubObjectType: 
+        m_EditorAssetChanged: 0
+      IsMaxCount: 0
+      MaxCount: 0
+      IsExactSpawnCount: 0
+      SpawnCount: 0
+    - AssetRef:
+        m_AssetGUID: 23a11724397c4f24a8f8cfc475e6eaca
+        m_SubObjectName: 
+        m_SubObjectType: 
+        m_EditorAssetChanged: 0
+      IsMaxCount: 0
+      MaxCount: 0
+      IsExactSpawnCount: 0
+      SpawnCount: 0
+    - AssetRef:
+        m_AssetGUID: ac62df912a178de43b8c0a65a81f68da
+        m_SubObjectName: 
+        m_SubObjectType: 
+        m_EditorAssetChanged: 0
+      IsMaxCount: 0
+      MaxCount: 0
+      IsExactSpawnCount: 0
+      SpawnCount: 0
+    Type: 0
+    MinR: 5
+    MaxR: 50
+    ObjectsCount: 50
+  - GenerationAssets:
+    - AssetRef:
+        m_AssetGUID: e9551efc61bf9a94ab747777b8d33bae
+        m_SubObjectName: 
+        m_SubObjectType: 
+        m_EditorAssetChanged: 0
+      IsMaxCount: 0
+      MaxCount: 0
+      IsExactSpawnCount: 0
+      SpawnCount: 0
+    - AssetRef:
+        m_AssetGUID: b62570a1c754f234b8340d165582c968
+        m_SubObjectName: 
+        m_SubObjectType: 
+        m_EditorAssetChanged: 0
+      IsMaxCount: 0
+      MaxCount: 0
+      IsExactSpawnCount: 0
+      SpawnCount: 0
+    Type: 0
+    MinR: 50
+    MaxR: 150
+    ObjectsCount: 200
   GenerationLayerMask:
     serializedVersion: 2
     m_Bits: 64
